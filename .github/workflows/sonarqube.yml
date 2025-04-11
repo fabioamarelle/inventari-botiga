@@ -4,8 +4,12 @@ on:
   push:
     branches:
       - main
+      - develop
   pull_request:
     types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - develop
 
 jobs:
   sonarqube:
@@ -13,6 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
