@@ -1,6 +1,10 @@
 # Entorns de desenvolupament: Projecte Final
 Desenvolupament d'un sistema de gestió d'inventari per a una botiga.
 
+[Documentació GitHub](https://docs.google.com/document/d/1gnoBHRnmVD7wAUJRrw6KIS9-iOtTpAS_Pd4XK2D7rCQ/edit?usp=sharing "Documentación GitHub")
+
+[Documentació GitHub (correu @institutjaumehuguet.cat)](https://docs.google.com/document/d/1VG1L9SKpDAiFMKlEdNU4IHNOrJPr7NskyvFRyqznFXQ/edit?usp=sharing "Documentació GitHub")
+
 ### **Estructura del projecte Java: descripció tècnica i funcional**
 Aquest projecte està organitzat en paquets que representen les diferents funcionalitats del sistema. Cada paquet conté les classes responsables de gestionar una part concreta de lògica, amb una arquitectura que segueix principis de responsabilitat única, modularitat i separació de preocupacions. Això ens permet dissenyar un sistema escalable, col·laboratiu i fàcil de mantenir.
 
