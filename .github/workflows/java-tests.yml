@@ -1,4 +1,4 @@
-name: Java Tests (manual build)
+name: Java Tests
 
 on:
   push:
