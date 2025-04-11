@@ -29,7 +29,7 @@ jobs:
         run: |
           mkdir -p out
           find src/main/java -name "*.java" > sources.txt
-          find test/java -name "*.java" > tests.txt
+          find src/test/java -name "*.java" > tests.txt
           javac -d out -cp libs/junit-platform-console-standalone.jar @sources.txt @tests.txt
 
       - name: Run tests
