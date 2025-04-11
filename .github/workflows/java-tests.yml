@@ -1,0 +1,39 @@
+name: Java Tests (manual build)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Download JUnit 5
+        run: |
+          mkdir -p libs
+          curl -L -o libs/junit-platform-console-standalone.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.2/junit-platform-console-standalone-1.10.2.jar
+
+      - name: Compile source and test files
+        run: |
+          mkdir -p out
+          find src/main/java -name "*.java" > sources.txt
+          find test/java -name "*.java" > tests.txt
+          javac -d out -cp libs/junit-platform-console-standalone.jar @sources.txt @tests.txt
+
+      - name: Run tests
+        run: |
+          java -jar libs/junit-platform-console-standalone.jar \
+            --class-path out \
+            --scan-class-path
