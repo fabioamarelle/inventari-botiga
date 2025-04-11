@@ -1,4 +1,4 @@
-name: Build
+name: SonarQube tests
 
 on:
   push:
@@ -23,11 +23,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Build with javac
+        run: |
+          mkdir -p out
+          javac -d out $(find src/main/java -name "*.java")
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         with:
-          sonar-project-key: el_teu_projecte_key
-          sonar-project-name: el_teu_projecte_nom
-          sonar-project-version: 1.0
+          args: -Dsonar.projectBaseDir=${{ github.workspace }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
