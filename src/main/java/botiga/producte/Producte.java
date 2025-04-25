@@ -1,8 +1,49 @@
 package main.java.botiga.producte;
 
 public class Producte {
-    // La classe Producte encapsula les dades bàsiques d’un producte: el nom, el preu i el stock disponible.
-    // Implementa un conjunt de getters i setters que permeten accedir i modificar la seva informació de forma controlada,
-    // així com un mètode toString() per mostrar els detalls del producte d’una manera clara per a l’usuari.
-    // A nivell tècnic, aquesta classe representa un POJO (Plain Old Java Object) senzill i purament descriptiu.
-}
+
+        private String nom;
+        private double preu;
+        private int stock;
+
+
+        public Producte(String nom, double preu, int stock) {
+            this.nom = nom;
+            this.preu = preu;
+            this.stock = stock;
+        }
+
+
+        public String getNom() {
+            return nom;
+        }
+
+        public double getPreu() {
+            return preu;
+        }
+
+        public int getStock() {
+            return stock;
+        }
+
+
+        public void setNom(String nom) {
+            this.nom = nom;
+        }
+
+        public void setPreu(double preu) {
+            this.preu = preu;
+        }
+
+        public void setStock(int stock) {
+            this.stock = stock;
+        }
+
+
+        @Override
+        public String toString() {
+            return "Producte{" + "nom='" + nom + '\'' + ", preu=" + preu + ", stock=" + stock + '}';
+        }
+    }
+
+
