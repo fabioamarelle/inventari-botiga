@@ -38,4 +38,40 @@ public class ProducteTest {
         // ASSERT
         assert resultat == 10;
     }
+    @Test
+    public void setNomOK() {
+        // ARRANGE
+        Producte p = new Producte("Producte", 8.8, 10);
+
+        // ACT
+        p.setNom("Producte1");
+        String resultat = p.getNom();
+
+        // ASSERT
+        assert resultat.equals("Producte1");
+    }
+    @Test
+    public void setPreuOK() {
+        // ARRANGE
+        Producte p = new Producte("Producte", 8.8, 10);
+
+        // ACT
+        p.setPreu(1);
+        double resultat = p.getPreu();
+
+        // ASSERT
+        assert resultat == 1;
+    }
+    @Test
+    public void setStockOK() {
+        // ARRANGE
+        Producte p = new Producte("Producte", 8.8, 10);
+
+        // ACT
+        p.setStock(1);
+        double resultat = p.getStock();
+
+        // ASSERT
+        assert resultat == 1;
+    }
 }
