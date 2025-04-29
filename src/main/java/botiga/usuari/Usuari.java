@@ -27,6 +27,5 @@ public class Usuari {
     public boolean esAdministrador() {
         return "administrador".equalsIgnoreCase(rol);
     }
-    //hola
 }
 
