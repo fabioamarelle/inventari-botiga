@@ -1,40 +1,65 @@
+package main.java.botiga.usuari;
 
-package test.java.botiga.usuari;
-
-import main.java.botiga.usuari.Usuari;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class GestorUsuariTest {
 
-    @Test
-    void testConstructorIGetters() {
+    private GestorUsuaris gestor;
+    private Usuari usuari1;
+    private Usuari usuari2;
 
-        // Verifiquem constructor i getters
-        Usuari usuari = new Usuari("Arnau", "arnau@gmail.com", "client");
-
-        assertEquals("Arnau", usuari.getNom());
-        assertEquals("arnau@gmail.com", usuari.getCorreuElectronic());
-        assertEquals("client", usuari.getRol());
+    @BeforeEach
+    void configurar() {
+        gestor = new GestorUsuaris();
+        usuari1 = new Usuari("Alice", "alice@example.com");
+        usuari2 = new Usuari("Bob",   "bob@example.com");
     }
 
     @Test
-    void testEsAdministradorAmbAdministrador() {
-
-
-        // Un usuari amb rol "administrador" ha de ser administrador
-        Usuari admin = new Usuari("Joel", "joel@gmail.com", "administrador");
-
-        assertTrue(admin.esAdministrador());
+    void afegirUsuari_retornaCert_quanNou() {
+        boolean resultat = gestor.afegirUsuari(usuari1);
+        assertTrue(resultat);
+        assertTrue(gestor.existeixUsuari("alice@example.com"));
     }
 
     @Test
-    void testEsAdministradorAmbClient() {
+    void afegirUsuari_retornaFals_quanJaExisteix() {
+        gestor.afegirUsuari(usuari1);
+        boolean resultat = gestor.afegirUsuari(new Usuari("Alice Dup", "alice@example.com"));
+        assertFalse(resultat);
+    }
 
+    @Test
+    void existeixUsuari_indiferentMajusculesMinuscules() {
+        gestor.afegirUsuari(usuari1);
+        assertTrue(gestor.existeixUsuari("ALICE@EXAMPLE.COM"));
+    }
 
-        // Un usuari amb rol "client" no ha de ser administrador
-        Usuari client = new Usuari("Edgar", "edgar@gmail.com", "client");
+    @Test
+    void obtenirUsuari_retornaUsuari_quanExisteix() {
+        gestor.afegirUsuari(usuari2);
+        Usuari trobat = gestor.obtenirUsuari("bob@example.com");
+        assertNotNull(trobat);
+        assertEquals("Bob", trobat.getNom());
+    }
 
-        assertFalse(client.esAdministrador());
+    @Test
+    void obtenirUsuari_retornaNull_quanNoExisteix() {
+        Usuari trobat = gestor.obtenirUsuari("noexisteix@example.com");
+        assertNull(trobat);
+    }
+
+    @Test
+    void getTotsUsuaris_retornaTotsElsAfegits() {
+        gestor.afegirUsuari(usuari1);
+        gestor.afegirUsuari(usuari2);
+        List<Usuari> tots = gestor.getTotsUsuaris();
+        assertEquals(2, tots.size());
+        assertTrue(tots.contains(usuari1));
+        assertTrue(tots.contains(usuari2));
     }
 }
