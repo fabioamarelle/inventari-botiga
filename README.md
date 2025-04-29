@@ -1,3 +1,5 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fabioamarelle_inventari-botiga&metric=alert_status&token=eec307d65f2179b28031580451b61ade0bcfbce9)](https://sonarcloud.io/summary/new_code?id=fabioamarelle_inventari-botiga)
+
 # Entorns de desenvolupament: Projecte Final
 Desenvolupament d'un sistema de gestió d'inventari per a una botiga.
 
