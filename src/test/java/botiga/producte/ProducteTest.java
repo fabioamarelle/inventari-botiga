@@ -74,4 +74,16 @@ public class ProducteTest {
         // ASSERT
         assert resultat == 1;
     }
+    @Test
+    public void toStringOK() {
+        // ARRANGE
+        Producte p = new Producte("Producte", 8.8, 10);
+
+        // ACT
+        String resultat = p.toString();
+
+        // ASSERT
+        assert (resultat != null);
+    }
+
 }
