@@ -2,11 +2,10 @@ name: SonarQube tests
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, productes, usuaris, utilitats, venda]
   pull_request:
     types: [opened, synchronize, reopened]
-    branches: [main, develop]
-
+    branches: [main, develop, productes, usuaris, utilitats, venda]
 jobs:
   sonarqube:
     runs-on: ubuntu-latest
