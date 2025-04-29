@@ -1,19 +1,41 @@
+
 package test.java.botiga.usuari;
 
+package test.java.botiga.usuari;
+import main.java.botiga.usuari.Usuari;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class GestorUsuarisTest {
-    // Ejemplo de test
+class UsuariTest {
+
     @Test
-    public void addTwoNumbersOK(){
-        // ARRANGE
-        int a = 1;
-        int b = 2;
+    void testConstructorIGetters() {
 
-        // ACT
-        int result = a + b;
+        // Verifiquem constructor i getters
+        Usuari usuari = new Usuari("Arnau", "arnau@gmail.com", "client");
 
-        // ASSERT
-        assert (a + b == 3);
+        assertEquals("Arnau", usuari.getNom());
+        assertEquals("arnau@gmail.com", usuari.getCorreuElectronic());
+        assertEquals("client", usuari.getRol());
+    }
+
+    @Test
+    void testEsAdministradorAmbAdministrador() {
+
+
+        // Un usuari amb rol "administrador" ha de ser administrador
+        Usuari admin = new Usuari("Joel", "joel@gmail.com", "administrador");
+
+        assertTrue(admin.esAdministrador());
+    }
+
+    @Test
+    void testEsAdministradorAmbClient() {
+
+
+        // Un usuari amb rol "client" no ha de ser administrador
+        Usuari client = new Usuari("Edgar", "edgar@gmail.com", "client");
+
+        assertFalse(client.esAdministrador());
     }
 }
