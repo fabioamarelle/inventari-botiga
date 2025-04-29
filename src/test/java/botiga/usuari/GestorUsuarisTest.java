@@ -1,12 +1,11 @@
 
 package test.java.botiga.usuari;
 
-package test.java.botiga.usuari;
 import main.java.botiga.usuari.Usuari;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class UsuariTest {
+class GestorUsuariTest {
 
     @Test
     void testConstructorIGetters() {
