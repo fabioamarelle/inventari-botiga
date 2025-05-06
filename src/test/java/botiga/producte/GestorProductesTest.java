@@ -2,7 +2,12 @@ package test.java.botiga.producte;
 
 import main.java.botiga.producte.Producte;
 import main.java.botiga.producte.GestorProductes;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.jupiter.api.Test;
 
 
@@ -91,28 +96,19 @@ public class GestorProductesTest {
         // ASSERT
         assert (!error);
     }
-   /*
-    private InputStream copiaSystemIn;
-    @BeforeEach
-    public void copiarSystemIn() {
-        copiaSystemIn = System.in;
-    }
 
-    @AfterEach
-    public void restaurarSystemIn() {
-        System.setIn(copiaSystemIn);
-    }
 
-    private void setInputStream(String input) {
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-    }
+
 
     @Test
-    public void LlegirEnterOK() throws InterruptedException {
-        String input = "Aigua\n1.0\n1\n";
-        setInputStream(input);
-
+    public void afegirProducteInputFunciona() throws InterruptedException {
         // ARRANGE
+        InputStream copiaSystemIn = System.in;
+
+        String input = "Aigua\n1.0\n1\n";
+
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+
         GestorProductes gestor = new GestorProductes();
 
         // ACT
@@ -121,8 +117,9 @@ public class GestorProductesTest {
 
         // ASSERT
         assert (resultats.size() == 1);
+
+        System.setIn(copiaSystemIn);
         TimeUnit.MILLISECONDS.sleep(100);
-;
+
     }
-    */
 }
