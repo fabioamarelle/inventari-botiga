@@ -5,7 +5,7 @@ import main.java.botiga.usuari.Usuari;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GestorUsuariTest {
+public class GestorUsuarisTest {
 
     @Test
     public void testAfegirUsuariCorrectament() {
