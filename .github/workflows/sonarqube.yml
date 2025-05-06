@@ -2,22 +2,15 @@ name: SonarQube tests
 
 on:
   push:
-    branches:
-      - main
-      - develop
+    branches: [main, develop, productes, usuaris, utilitats, venda]
   pull_request:
     types: [opened, synchronize, reopened]
-    branches:
-      - main
-      - develop
-
+    branches: [main, develop, productes, usuaris, utilitats, venda]
 jobs:
   sonarqube:
-    name: SonarQube Scan
     runs-on: ubuntu-latest
 
     steps:
-    
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -28,14 +21,39 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with javac
+      - name: Download JUnit Console + JaCoCo CLI
         run: |
-          mkdir -p out
+          mkdir tools
+          curl -L -o tools/junit-platform-console-standalone.jar https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.0/junit-platform-console-standalone-1.10.0.jar
+          curl -L -o tools/jacoco-cli.jar https://repo1.maven.org/maven2/org/jacoco/org.jacoco.cli/0.8.11/org.jacoco.cli-0.8.11-nodeps.jar
+          curl -L -o tools/jacocoagent.jar https://repo1.maven.org/maven2/org/jacoco/org.jacoco.agent/0.8.11/org.jacoco.agent-0.8.11-runtime.jar
+
+      - name: Compile Java
+        run: |
+          mkdir -p out test-classes
           javac -d out $(find src/main/java -name "*.java")
+          javac -d test-classes -cp "tools/junit-platform-console-standalone.jar:out" $(find src/test/java -name "*.java")
+
+      - name: Run Tests with Coverage
+        run: |
+          mkdir jacoco-report
+          java -javaagent:tools/jacocoagent.jar=destfile=jacoco-report/jacoco.exec \
+            -jar tools/junit-platform-console-standalone.jar \
+            --class-path "out:test-classes" \
+            --scan-class-path
+
+      - name: Generate JaCoCo XML Report
+        run: |
+          java -jar tools/jacoco-cli.jar report jacoco-report/jacoco.exec \
+            --classfiles out \
+            --sourcefiles src/main/java \
+            --xml jacoco-report/jacoco.xml
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         with:
-          args: -Dsonar.projectBaseDir=${{ github.workspace }}
+          args: >
+            -Dsonar.projectBaseDir=${{ github.workspace }}
+            -Dsonar.coverage.jacoco.xmlReportPaths=jacoco-report/jacoco.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
