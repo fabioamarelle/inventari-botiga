@@ -2,7 +2,7 @@ package main.java.botiga.usuari;
 
 
 import test.java.botiga.usuari.Rol;
-
+//usuari
 public class Usuari {
     private String nom;
     private String correuElectronic;

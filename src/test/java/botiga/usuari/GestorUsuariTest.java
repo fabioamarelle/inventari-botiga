@@ -10,7 +10,7 @@ public class GestorUsuariTest {
     @Test
     public void testAfegirUsuariCorrectament() {
         GestorUsuaris gestor = new GestorUsuaris();
-        Usuari usuari = new Usuari("Joel", "joel@gmail.com", "client");
+        Usuari usuari = new Usuari("Joel", "joel@gmail.com", Rol.CLIENT);
         boolean afegit = gestor.afegirUsuari(usuari);
         assertTrue(afegit);
     }
@@ -18,7 +18,7 @@ public class GestorUsuariTest {
     @Test
     public void testNoAfegirUsuariRepetit() {
         GestorUsuaris gestor = new GestorUsuaris();
-        Usuari usuari = new Usuari("Joel", "joel@gmail.com", "client");
+        Usuari usuari = new Usuari("Joel", "joel@gmail.com", Rol.CLIENT);
         gestor.afegirUsuari(usuari);
         boolean afegit = gestor.afegirUsuari(usuari);
         assertFalse(afegit);
@@ -27,7 +27,7 @@ public class GestorUsuariTest {
     @Test
     public void testObtenirUsuariExist() {
         GestorUsuaris gestor = new GestorUsuaris();
-        Usuari usuari = new Usuari("Joel", "joel@gmail.com", "client");
+        Usuari usuari = new Usuari("Joel", "joel@gmail.com", Rol.CLIENT);
         gestor.afegirUsuari(usuari);
         Usuari obtingut = gestor.obtenirUsuari("joel@gmail.com");
         assertNotNull(obtingut);

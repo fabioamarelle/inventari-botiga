@@ -2,7 +2,7 @@ package test.java.botiga.usuari;
 import main.java.botiga.usuari.Usuari;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
+//Usuari test
 public class UsuariTest {
 
     @Test
