@@ -4,7 +4,6 @@ import main.java.botiga.usuari.Usuari;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class Venda {
     private LocalDate data;
@@ -19,6 +18,7 @@ public class Venda {
 
     public Venda(LocalDate data) {
         this.data = data;
+        this.llistaTransaccio = new ArrayList<>();
     }
 
     public LocalDate getData() {
