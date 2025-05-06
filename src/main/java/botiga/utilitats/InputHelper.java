@@ -3,70 +3,100 @@ package main.java.botiga.utilitats;
 import java.util.Scanner;
 
 public class InputHelper {
-    private static Scanner scanner = new Scanner(System.in);
+
+    // Única instància de Scanner per evitar problemes amb System.in
+    private static final Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Llegeix un número enter des de consola.
+     */
     public static int llegirEnter(String missatge) {
-        Scanner scanner = new Scanner(System.in);
         int num = 0;
         boolean valid = false;
+
         while (!valid) {
             try {
                 System.out.print(missatge);
                 num = Integer.parseInt(scanner.nextLine());
                 valid = true;
             } catch (NumberFormatException e) {
-                System.out.println("Error: No és un número vàlid. Torna a intentar-ho.");
+                System.out.println("Error: No és un número enter vàlid.");
             }
         }
-        scanner.close();
+
         return num;
     }
+
+    /**
+     * Llegeix un número enter positiu (> 0).
+     */
     public static int llegirEnterPositiu(String missatge) {
-        Scanner scanner = new Scanner(System.in);
-        int num = 0;
-        boolean valid = false;
-        while (!valid) {
-            try {
-                System.out.print(missatge);
-                num = Integer.parseInt(scanner.nextLine());
-                if (num > 0) {
-                    valid = true;
-                };
-            } catch (NumberFormatException e) {
-                System.out.println("Error: No és un número vàlid. Torna a intentar-ho.");
+        int num;
+
+        do {
+            num = llegirEnter(missatge);
+            if (num <= 0) {
+                System.out.println("Error: El número ha de ser positiu.");
             }
-        }
-        scanner.close();
+        } while (num <= 0);
+
         return num;
     }
+
+    /**
+     * Llegeix un número decimal (double) des de consola.
+     */
     public static double llegirDecimal(String missatge) {
-        Scanner scanner = new Scanner(System.in);
         double num = 0.0;
         boolean valid = false;
+
         while (!valid) {
-            try{
-                System.out.println(missatge);
+            try {
+                System.out.print(missatge);
                 num = Double.parseDouble(scanner.nextLine());
                 valid = true;
-            } catch (NumberFormatException e){
-                System.out.println("Introdueix un número decimal, el que has posat no és vàlid.");
+            } catch (NumberFormatException e) {
+                System.out.println("Error: No és un número decimal vàlid.");
             }
         }
-        scanner.close();
-        return (double) num;
+
+        return num;
     }
-    public static String llegirString(String missatge){
-        Scanner scanner = new Scanner(System.in);
-        String input = "";
-        do
-        {
-            System.out.println(missatge);
-            input = scanner.nextLine();
-            if (input.isEmpty()){
-                System.out.println("El text estava buit, introdueix un de vàlid.");
-        }
-        }
-        while (input.isEmpty());
-        scanner.close();
+
+    /**
+     * Llegeix una cadena de text no buida.
+     */
+    public static String llegirString(String missatge) {
+        String input;
+
+        do {
+            System.out.print(missatge);
+            input = scanner.nextLine().trim();
+            if (input.isEmpty()) {
+                System.out.println("Error: El text no pot estar buit.");
+            }
+        } while (input.isEmpty());
+
         return input;
+    }
+
+    /**
+     * Llegeix una resposta booleana amb "sí"/"no".
+     */
+    public static boolean llegirBoolean(String missatge) {
+        String input;
+
+        while (true) {
+            System.out.print(missatge + " (sí/no): ");
+            input = scanner.nextLine().trim().toLowerCase();
+
+            if (input.equals("sí") || input.equals("si")) {
+                return true;
+            } else if (input.equals("no")) {
+                return false;
+            } else {
+                System.out.println("Error: Resposta no reconeguda. Escriu 'sí' o 'no'.");
+            }
+        }
     }
 }
