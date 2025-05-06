@@ -11,7 +11,7 @@ public class GestorVendes {
     // per producte. Aquesta classe assegura la persistència temporal de les vendes realitzades dins de la sessió
     // i manté la coherència del sistema.
 
-    private ArrayList<Venda> llista_venda = new ArrayList<>();
+    private ArrayList<Venda> llista_vendes = new ArrayList<>();
 
     public GestorVendes() {
         this.llista_vendes = new ArrayList<>();
@@ -20,7 +20,7 @@ public class GestorVendes {
         llista_vendes.add(venda);
     }
     public void buscarVenda(Venda venda){
-        for (Venda venda2 : llista_venda){
+        for (Venda venda2 : llista_vendes){
             if (venda2.equals(venda)){
                 System.out.println(venda);
             }
@@ -31,7 +31,7 @@ public class GestorVendes {
 
     }
     public void vendesPeriode(LocalDate dataInici, LocalDate dataFi){
-        for (Venda venda : llista_venda){
+        for (Venda venda : llista_vendes){
             LocalDate dataVenda = venda.getData();
             if ((dataVenda.isEqual(dataInici) || dataVenda.isAfter(dataInici)) &&
                     (dataVenda.isEqual(dataFi) || dataVenda.isBefore(dataFi))) {
@@ -43,7 +43,7 @@ public class GestorVendes {
 
     public void vendesProducte(Producte producte){
         HashMap<String,Integer> producteQuantitat = new HashMap<>();
-        for (Venda venda : llista_venda)  {
+        for (Venda venda : llista_vendes)  {
             for (Transaccio transaccio: )
         }
 
