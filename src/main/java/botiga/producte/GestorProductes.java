@@ -1,11 +1,12 @@
 package main.java.botiga.producte;
 
-import java.lang.reflect.Array;
+import main.java.botiga.utilitats.InputHelper;
+
 import java.util.ArrayList;
 
 public class GestorProductes {
     //llista per gestionar productes
-    private ArrayList<Producte> cataleg;
+    private final ArrayList<Producte> cataleg;
     public GestorProductes() {
         this.cataleg = new ArrayList<>();
     }
@@ -13,6 +14,13 @@ public class GestorProductes {
     //afegir productes
     public void afegirProducte(Producte p) {
         cataleg.add(p);
+    }
+    //afegir productes amb input
+    public void afegirProducte() {
+        String nom = InputHelper.llegirString("Introduexi el nom del producte:");
+        double preu = InputHelper.llegirDecimal("Introduexi el preu del producte:");
+        int stock = InputHelper.llegirEnterPositiu("Introduexi el stock del producte:");
+        cataleg.add(new Producte(nom, preu, stock));
     }
 
 

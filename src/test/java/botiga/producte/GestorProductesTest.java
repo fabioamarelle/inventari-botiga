@@ -2,7 +2,7 @@ package test.java.botiga.producte;
 
 import main.java.botiga.producte.Producte;
 import main.java.botiga.producte.GestorProductes;
-import java.util.List;
+import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 
@@ -17,7 +17,7 @@ public class GestorProductesTest {
 
         // ACT
         gestor.afegirProducte(p);
-        List<Producte> resultats = gestor.cercarPerNom("Pizza");
+        ArrayList<Producte> resultats = gestor.cercarPerNom("Pizza");
 
         // ASSERT
         assert (resultats.size() == 1);
@@ -32,7 +32,7 @@ public class GestorProductesTest {
         gestor.afegirProducte(p);
 
         // ACT
-        List<Producte> resultats = gestor.cercarPerNom("lle");
+        ArrayList<Producte> resultats = gestor.cercarPerNom("lle");
 
         // ASSERT
         assert (resultats.size() == 1);
@@ -89,6 +89,40 @@ public class GestorProductesTest {
         }
 
         // ASSERT
-        assert (error == false);
+        assert (!error);
     }
+   /*
+    private InputStream copiaSystemIn;
+    @BeforeEach
+    public void copiarSystemIn() {
+        copiaSystemIn = System.in;
+    }
+
+    @AfterEach
+    public void restaurarSystemIn() {
+        System.setIn(copiaSystemIn);
+    }
+
+    private void setInputStream(String input) {
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+    }
+
+    @Test
+    public void LlegirEnterOK() throws InterruptedException {
+        String input = "Aigua\n1.0\n1\n";
+        setInputStream(input);
+
+        // ARRANGE
+        GestorProductes gestor = new GestorProductes();
+
+        // ACT
+        gestor.afegirProducte();
+        ArrayList<Producte> resultats = gestor.cercarPerNom("Aigua");
+
+        // ASSERT
+        assert (resultats.size() == 1);
+        TimeUnit.MILLISECONDS.sleep(100);
+;
+    }
+    */
 }
