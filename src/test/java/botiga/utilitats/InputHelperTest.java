@@ -1,19 +1,138 @@
 package test.java.botiga.utilitats;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
+
+import static main.java.botiga.utilitats.InputHelper.*;
 
 public class InputHelperTest {
-    // Ejemplo de test
+
+    private InputStream systemInBackup;
+
+    @BeforeEach
+    public void setUp() {
+        systemInBackup = System.in;  // Backup the original System.in
+    }
+
+    @AfterEach
+    public void restoreSystemInStream() {
+        System.setIn(systemInBackup);  // Restore the original System.in
+    }
+
+    // Helper method to set the input stream for each test
+    private void setInputStream(String input) {
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+    }
+
     @Test
-    public void addTwoNumbersOK(){
-        // ARRANGE
-        int a = 1;
-        int b = 2;
+    public void LlegirEnterOK() throws InterruptedException {
+        String input = "123\n";
+        setInputStream(input);
+        int result = llegirEnter("Introdueix un número enter");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert 123 == result;
+    }
 
-        // ACT
-        int result = a + b;
+    @Test
+    public void LlegirEnterInvalidOK() throws InterruptedException {
+        String input = "abc\n456\n";
+        setInputStream(input);
+        int result = llegirEnter("Introdueix un número enter");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert 456 == result;
+    }
 
-        // ASSERT
-        assert (a + b == 3);
+    @Test
+    public void LlegirEnterNegatiuOK() throws InterruptedException {
+        String input = "-123\n";
+        setInputStream(input);
+        int result = llegirEnter("Introdueix un número enter");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert -123 == result;
+    }
+
+    @Test
+    public void LlegirEnterPositiuOK() throws InterruptedException {
+        String input = "123\n";
+        setInputStream(input);
+        int result = llegirEnterPositiu("Introdueix un número enter positiu");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert 123 == result;
+    }
+
+    @Test
+    public void LlegirEnterPositiuInvalidOK() throws InterruptedException {
+        String input = "abc\n456\n";
+        setInputStream(input);
+        int result = llegirEnterPositiu("Introdueix un número enter positiu");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert 456 == result;
+    }
+
+    @Test
+    public void LlegirEnterPositiuNegatiuOK() throws InterruptedException {
+        String input = "-123\n0\n456\n";
+        setInputStream(input);
+        int result = llegirEnterPositiu("Introdueix un número enter positiu");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert 456 == result;
+    }
+
+    @Test
+    public void LlegirDecimalOK() throws InterruptedException {
+        String input = "123.4\n";
+        setInputStream(input);
+        double result = llegirDecimal("Introdueix un número decimal");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert 123.4 == result;
+    }
+
+    @Test
+    public void LlegirDecimalInvalidOK() throws InterruptedException {
+        String input = "abc\n456.7\n";
+        setInputStream(input);
+        double result = llegirDecimal("Introdueix un número decimal");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert 456.7 == result;
+    }
+
+    @Test
+    public void LlegirDecimalNegatiuOK() throws InterruptedException {
+        String input = "-123.4\n";
+        setInputStream(input);
+        double result = llegirDecimal("Introdueix un número decimal");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert -123.4 == result;
+    }
+
+    @Test
+    public void LlegirStringOK() throws InterruptedException {
+        String input = "abc\n";
+        setInputStream(input);
+        String result = llegirString("Introdueix un text");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert "abc".equals(result);
+    }
+
+    @Test
+    public void LlegirStringNumeroOK() throws InterruptedException {
+        String input = "123\n";
+        setInputStream(input);
+        String result = llegirString("Introdueix un text");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert "123".equals(result);
+    }
+
+    @Test
+    public void LlegirStringInvalidOK() throws InterruptedException {
+        String input = "\nabc\n";
+        setInputStream(input);
+        String result = llegirString("Introdueix un text");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert "abc".equals(result);
     }
 }
