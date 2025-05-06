@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 
+import static main.java.botiga.utilitats.InputHelper.reiniciarScanner;
+
 
 public class GestorProductesTest {
 
@@ -97,17 +99,14 @@ public class GestorProductesTest {
         assert (!error);
     }
 
-
-
-
     @Test
     public void afegirProducteInputFunciona() throws InterruptedException {
         // ARRANGE
         InputStream copiaSystemIn = System.in;
 
         String input = "Aigua\n1.0\n1\n";
-
         System.setIn(new ByteArrayInputStream(input.getBytes()));
+        reiniciarScanner();
 
         GestorProductes gestor = new GestorProductes();
 
