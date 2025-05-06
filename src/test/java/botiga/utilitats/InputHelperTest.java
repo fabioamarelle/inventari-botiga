@@ -11,19 +11,18 @@ import static main.java.botiga.utilitats.InputHelper.*;
 
 public class InputHelperTest {
 
-    private InputStream systemInBackup;
+    private InputStream copiaSystemIn;
 
     @BeforeEach
-    public void setUp() {
-        systemInBackup = System.in;  // Backup the original System.in
+    public void copiarSystemIn() {
+        copiaSystemIn = System.in;
     }
 
     @AfterEach
-    public void restoreSystemInStream() {
-        System.setIn(systemInBackup);  // Restore the original System.in
+    public void restaurarSystemIn() {
+        System.setIn(copiaSystemIn);
     }
 
-    // Helper method to set the input stream for each test
     private void setInputStream(String input) {
         System.setIn(new ByteArrayInputStream(input.getBytes()));
     }
