@@ -4,56 +4,69 @@ import java.util.Scanner;
 
 public class InputHelper {
     private static Scanner scanner = new Scanner(System.in);
-    public static int llegirEnter() {
+    public static int llegirEnter(String missatge) {
         Scanner scanner = new Scanner(System.in);
         int num = 0;
         boolean valid = false;
         while (!valid) {
             try {
-                System.out.print("Introdueix un número enter: ");
+                System.out.print(missatge);
                 num = Integer.parseInt(scanner.nextLine());
                 valid = true;
             } catch (NumberFormatException e) {
                 System.out.println("Error: No és un número vàlid. Torna a intentar-ho.");
             }
         }
+        scanner.close();
         return num;
     }
-    public static int llegirEnterPositiu() {
-        int num;
-        do {
-            num = llegirEnter();
-            if (num <= 0) {
-                System.out.println("Introdueix un número positiu.");
+    public static int llegirEnterPositiu(String missatge) {
+        Scanner scanner = new Scanner(System.in);
+        int num = 0;
+        boolean valid = false;
+        while (!valid) {
+            try {
+                System.out.print(missatge);
+                num = Integer.parseInt(scanner.nextLine());
+                if (num > 0) {
+                    valid = true;
+                };
+            } catch (NumberFormatException e) {
+                System.out.println("Error: No és un número vàlid. Torna a intentar-ho.");
             }
-        } while (num <= 0);
+        }
+        scanner.close();
         return num;
     }
-    public static int llegirDecimal() {
+    public static double llegirDecimal(String missatge) {
+        Scanner scanner = new Scanner(System.in);
         double num = 0.0;
         boolean valid = false;
         while (!valid) {
             try{
-                System.out.println("Introdueix un numero decimal.");
+                System.out.println(missatge);
                 num = Double.parseDouble(scanner.nextLine());
                 valid = true;
-            }catch (NumberFormatException e){
-                System.out.println("Introdueix un numero decimal, el que has posat no es valid.");
+            } catch (NumberFormatException e){
+                System.out.println("Introdueix un número decimal, el que has posat no és vàlid.");
             }
         }
-        return (int) num;
+        scanner.close();
+        return (double) num;
     }
-    public static String Stringbuit(){
+    public static String llegirString(String missatge){
+        Scanner scanner = new Scanner(System.in);
         String input = "";
         do
         {
-            System.out.println("Introdueix un text");
+            System.out.println(missatge);
             input = scanner.nextLine();
             if (input.isEmpty()){
-                System.out.println("El text estava buit, introdueix un de valid ");
+                System.out.println("El text estava buit, introdueix un de vàlid.");
         }
         }
         while (input.isEmpty());
+        scanner.close();
         return input;
     }
 }
