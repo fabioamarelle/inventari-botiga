@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class InputHelper {
     private static Scanner scanner = new Scanner(System.in);
     public static int llegirEnter(String missatge) {
-        Scanner scanner = new Scanner(System.in);
         int num = 0;
         boolean valid = false;
         while (!valid) {
@@ -17,11 +16,9 @@ public class InputHelper {
                 System.out.println("Error: No és un número vàlid. Torna a intentar-ho.");
             }
         }
-        scanner.close();
         return num;
     }
     public static int llegirEnterPositiu(String missatge) {
-        Scanner scanner = new Scanner(System.in);
         int num = 0;
         boolean valid = false;
         while (!valid) {
@@ -30,16 +27,14 @@ public class InputHelper {
                 num = Integer.parseInt(scanner.nextLine());
                 if (num > 0) {
                     valid = true;
-                };
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Error: No és un número vàlid. Torna a intentar-ho.");
             }
         }
-        scanner.close();
         return num;
     }
     public static double llegirDecimal(String missatge) {
-        Scanner scanner = new Scanner(System.in);
         double num = 0.0;
         boolean valid = false;
         while (!valid) {
@@ -51,12 +46,10 @@ public class InputHelper {
                 System.out.println("Introdueix un número decimal, el que has posat no és vàlid.");
             }
         }
-        scanner.close();
-        return (double) num;
+        return num;
     }
     public static String llegirString(String missatge){
-        Scanner scanner = new Scanner(System.in);
-        String input = "";
+        String input;
         do
         {
             System.out.println(missatge);
@@ -66,7 +59,11 @@ public class InputHelper {
         }
         }
         while (input.isEmpty());
-        scanner.close();
         return input;
     }
+
+    public static void reiniciarScanner() {
+        scanner = new Scanner(System.in);
+    }
+
 }
