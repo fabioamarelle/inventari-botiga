@@ -31,6 +31,8 @@ public class InputHelperTest {
     public void LlegirEnterOK() throws InterruptedException {
         String input = "123\n";
         setInputStream(input);
+        reiniciarScanner();
+
         int result = llegirEnter("Introdueix un número enter");
         TimeUnit.MILLISECONDS.sleep(100);
         assert 123 == result;
@@ -40,6 +42,8 @@ public class InputHelperTest {
     public void LlegirEnterInvalidOK() throws InterruptedException {
         String input = "abc\n456\n";
         setInputStream(input);
+        reiniciarScanner();
+
         int result = llegirEnter("Introdueix un número enter");
         TimeUnit.MILLISECONDS.sleep(100);
         assert 456 == result;
@@ -49,6 +53,8 @@ public class InputHelperTest {
     public void LlegirEnterNegatiuOK() throws InterruptedException {
         String input = "-123\n";
         setInputStream(input);
+        reiniciarScanner();
+
         int result = llegirEnter("Introdueix un número enter");
         TimeUnit.MILLISECONDS.sleep(100);
         assert -123 == result;
@@ -58,6 +64,8 @@ public class InputHelperTest {
     public void LlegirEnterPositiuOK() throws InterruptedException {
         String input = "123\n";
         setInputStream(input);
+        reiniciarScanner();
+
         int result = llegirEnterPositiu("Introdueix un número enter positiu");
         TimeUnit.MILLISECONDS.sleep(100);
         assert 123 == result;
@@ -67,8 +75,11 @@ public class InputHelperTest {
     public void LlegirEnterPositiuInvalidOK() throws InterruptedException {
         String input = "abc\n456\n";
         setInputStream(input);
+        reiniciarScanner();
+
         int result = llegirEnterPositiu("Introdueix un número enter positiu");
         TimeUnit.MILLISECONDS.sleep(100);
+
         assert 456 == result;
     }
 
@@ -76,8 +87,11 @@ public class InputHelperTest {
     public void LlegirEnterPositiuNegatiuOK() throws InterruptedException {
         String input = "-123\n0\n456\n";
         setInputStream(input);
+        reiniciarScanner();
+
         int result = llegirEnterPositiu("Introdueix un número enter positiu");
         TimeUnit.MILLISECONDS.sleep(100);
+
         assert 456 == result;
     }
 
@@ -85,8 +99,11 @@ public class InputHelperTest {
     public void LlegirDecimalOK() throws InterruptedException {
         String input = "123.4\n";
         setInputStream(input);
+        reiniciarScanner();
+
         double result = llegirDecimal("Introdueix un número decimal");
         TimeUnit.MILLISECONDS.sleep(100);
+
         assert 123.4 == result;
     }
 
@@ -94,8 +111,11 @@ public class InputHelperTest {
     public void LlegirDecimalInvalidOK() throws InterruptedException {
         String input = "abc\n456.7\n";
         setInputStream(input);
+        reiniciarScanner();
+
         double result = llegirDecimal("Introdueix un número decimal");
         TimeUnit.MILLISECONDS.sleep(100);
+
         assert 456.7 == result;
     }
 
@@ -103,8 +123,11 @@ public class InputHelperTest {
     public void LlegirDecimalNegatiuOK() throws InterruptedException {
         String input = "-123.4\n";
         setInputStream(input);
+        reiniciarScanner();
+
         double result = llegirDecimal("Introdueix un número decimal");
         TimeUnit.MILLISECONDS.sleep(100);
+
         assert -123.4 == result;
     }
 
@@ -112,8 +135,11 @@ public class InputHelperTest {
     public void LlegirStringOK() throws InterruptedException {
         String input = "abc\n";
         setInputStream(input);
+        reiniciarScanner();
+
         String result = llegirString("Introdueix un text");
         TimeUnit.MILLISECONDS.sleep(100);
+
         assert "abc".equals(result);
     }
 
@@ -121,8 +147,11 @@ public class InputHelperTest {
     public void LlegirStringNumeroOK() throws InterruptedException {
         String input = "123\n";
         setInputStream(input);
+        reiniciarScanner();
+
         String result = llegirString("Introdueix un text");
         TimeUnit.MILLISECONDS.sleep(100);
+
         assert "123".equals(result);
     }
 
@@ -130,8 +159,11 @@ public class InputHelperTest {
     public void LlegirStringInvalidOK() throws InterruptedException {
         String input = "\nabc\n";
         setInputStream(input);
+        reiniciarScanner();
+
         String result = llegirString("Introdueix un text");
         TimeUnit.MILLISECONDS.sleep(100);
+
         assert "abc".equals(result);
     }
 
