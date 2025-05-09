@@ -1,91 +1,70 @@
-package test.java.botiga.usuari;
-
-import main.java.botiga.usuari.GestorUsuaris;
-import main.java.botiga.usuari.Rol;
-import main.java.botiga.usuari.Usuari;
-import org.junit.jupiter.api.Test;
+package main.java.botiga.usuari;
+import main.java.botiga.utilitats.InputHelper;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class GestorUsuaris {
+    // La classe GestorUsuaris s’encarrega de gestionar la llista d’usuaris registrats i operar-hi: afegir nous usuaris,
+    // validar-ne l’existència, obtenir un usuari concret... Aquesta capa, igual que el GestorProductes, separa la lògica d’interacció
+    // amb els usuaris del codi de la interfície o del flux principal del programa.
 
-public class GestorUsuarisTest {
+    private ArrayList<Usuari> llistaUsuaris;
 
-    @Test
-    public void testAfegirUsuariCorrectament() {
-        GestorUsuaris gestor = new GestorUsuaris();
-        Usuari usuari = new Usuari("Joel", "joel@gmail.com",  Rol.ADMINISTRADOR);
-        boolean afegit = gestor.afegirUsuari(usuari);
-        assertTrue(afegit);
+    public GestorUsuaris() {
+        this.llistaUsuaris = new ArrayList<>();
     }
 
-    @Test
-    public void testNoAfegirUsuariRepetit() {
-        GestorUsuaris gestor = new GestorUsuaris();
-        Usuari usuari = new Usuari("Joel", "joel@gmail.com", Rol.ADMINISTRADOR);
-        gestor.afegirUsuari(usuari);
-        boolean afegit = gestor.afegirUsuari(usuari);
-        assertFalse(afegit);
+    public boolean afegirUsuari(Usuari usuari) {
+        if (existeixUsuari(usuari.getCorreuElectronic())) {
+            return false;
+        }
+        llistaUsuaris.add(usuari);
+        return true;
     }
 
-    @Test
-    public void testObtenirUsuariExist() {
-        GestorUsuaris gestor = new GestorUsuaris();
-        Usuari usuari = new Usuari("Joel", "joel@gmail.com", Rol.ADMINISTRADOR);
-        gestor.afegirUsuari(usuari);
-        Usuari obtingut = gestor.obtenirUsuari("joel@gmail.com");
-        assertNotNull(obtingut);
+    public void afegirUsuari() {
+        String nom = InputHelper.llegirString("Introdueix el nom:");
+        String correuElectronic = InputHelper.llegirString("Introdueix el correu electrònic:");
+        boolean esAdministrador = InputHelper.llegirBoolean("Introdueix el rol:", "Administrador", "Client");
+
+        if (esAdministrador){
+            Rol rol = Rol.ADMINISTRADOR;
+            llistaUsuaris.add(new Usuari(nom, correuElectronic, rol));
+        } else {
+            Rol rol = Rol.CLIENT;
+            llistaUsuaris.add(new Usuari(nom, correuElectronic, rol));
+        }
+
     }
 
-    @Test
-    public void testObtenirUsuariNoExist() {
-        GestorUsuaris gestor = new GestorUsuaris();
-        Usuari obtingut = gestor.obtenirUsuari("noexisteix@gmail.com");
-        assertNull(obtingut);
+    public boolean existeixUsuari(String correuElectronic) {
+        for (Usuari u : llistaUsuaris) {
+            if (u.getCorreuElectronic().equalsIgnoreCase(correuElectronic)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    @Test
-    public void testGetTotsUsuaris() {
-        GestorUsuaris gestor = new GestorUsuaris();
-
-        Usuari usuari1 = new Usuari("Joel", "joel@gmail.com", Rol.ADMINISTRADOR);
-        Usuari usuari2 = new Usuari("Arnau", "arnau@gmail.com", Rol.CLIENT);
-
-        gestor.afegirUsuari(usuari1);
-        gestor.afegirUsuari(usuari2);
-
-        ArrayList<Usuari> llistaUsuari = gestor.getTotsUsuaris();
-
-        assert (llistaUsuari != null);
-        assert (llistaUsuari.size() == 2);
-        assert (Objects.equals(llistaUsuari.getFirst(), usuari1));
-        assert (Objects.equals(llistaUsuari.getLast(), usuari2));
+    public Usuari obtenirUsuari(String correuElectronic) {
+        for (Usuari u : llistaUsuaris) {
+            if (u.getCorreuElectronic().equalsIgnoreCase(correuElectronic)) {
+                return u;
+            }
+        }
+        return null;
     }
 
-    @Test
-    public void testExisteixUsuariTrue() {
-        GestorUsuaris gestor = new GestorUsuaris();
-
-        Usuari usuari1 = new Usuari("Joel", "joel@gmail.com", Rol.ADMINISTRADOR);
-
-        gestor.afegirUsuari(usuari1);
-
-        boolean result = gestor.existeixUsuari(usuari1.getCorreuElectronic());
-
-        assert (result);
+    public ArrayList<Usuari> getTotsUsuaris() {
+        return new ArrayList<>(llistaUsuaris);
     }
 
-    @Test
-    public void testExisteixUsuariFalse() {
-        GestorUsuaris gestor = new GestorUsuaris();
+    public ArrayList<Usuari> getLlistaUsuaris() {
+        return llistaUsuaris;
+    }
 
-        Usuari usuari1 = new Usuari("Joel", "joel@gmail.com", Rol.ADMINISTRADOR);
-
-        gestor.afegirUsuari(usuari1);
-
-        boolean result = gestor.existeixUsuari("arnau@gmail.com");
-
-        assert (!result);
+    public void setLlistaUsuaris(ArrayList<Usuari> llistaUsuaris) {
+        this.llistaUsuaris = llistaUsuaris;
     }
 }
+
