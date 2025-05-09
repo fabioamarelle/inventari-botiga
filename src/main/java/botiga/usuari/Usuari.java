@@ -28,4 +28,3 @@ public class Usuari {
         return "administrador".equalsIgnoreCase(rol);
     }
 }
-
