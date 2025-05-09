@@ -1,13 +1,14 @@
 package main.java.botiga.usuari;
+import main.java.botiga.utilitats.InputHelper;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class GestorUsuaris {
     // La classe GestorUsuaris s’encarrega de gestionar la llista d’usuaris registrats i operar-hi: afegir nous usuaris,
     // validar-ne l’existència, obtenir un usuari concret... Aquesta capa, igual que el GestorProductes, separa la lògica d’interacció
     // amb els usuaris del codi de la interfície o del flux principal del programa.
 
-    private List<Usuari> llistaUsuaris;
+    private ArrayList<Usuari> llistaUsuaris;
 
     public GestorUsuaris() {
         this.llistaUsuaris = new ArrayList<>();
@@ -19,6 +20,21 @@ public class GestorUsuaris {
         }
         llistaUsuaris.add(usuari);
         return true;
+    }
+
+    public void afegirUsuari() {
+        String nom = InputHelper.llegirString("Introdueix el nom:");
+        String correuElectronic = InputHelper.llegirString("Introdueix el correu electrònic:");
+        boolean esAdministrador = InputHelper.llegirBoolean("Introdueix el rol:", "Administrador", "Client");
+
+        if (esAdministrador){
+            Rol rol = Rol.ADMINISTRADOR;
+            llistaUsuaris.add(new Usuari(nom, correuElectronic, rol));
+        } else {
+            Rol rol = Rol.CLIENT;
+            llistaUsuaris.add(new Usuari(nom, correuElectronic, rol));
+        }
+
     }
 
     public boolean existeixUsuari(String correuElectronic) {
@@ -39,15 +55,15 @@ public class GestorUsuaris {
         return null;
     }
 
-    public List<Usuari> getTotsUsuaris() {
+    public ArrayList<Usuari> getTotsUsuaris() {
         return new ArrayList<>(llistaUsuaris);
     }
 
-    public List<Usuari> getLlistaUsuaris() {
+    public ArrayList<Usuari> getLlistaUsuaris() {
         return llistaUsuaris;
     }
 
-    public void setLlistaUsuaris(List<Usuari> llistaUsuaris) {
+    public void setLlistaUsuaris(ArrayList<Usuari> llistaUsuaris) {
         this.llistaUsuaris = llistaUsuaris;
     }
 }

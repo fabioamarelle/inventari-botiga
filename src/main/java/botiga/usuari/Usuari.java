@@ -1,12 +1,11 @@
 package main.java.botiga.usuari;
 
 
-import test.java.botiga.usuari.Rol;
 //usuari
 public class Usuari {
     private String nom;
     private String correuElectronic;
-    private Rol rol; //enum aquii
+    private Rol rol;
 
     public Usuari(String nom, String correuElectronic, Rol rol) {
         this.nom = nom;
