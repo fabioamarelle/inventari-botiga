@@ -1,6 +1,7 @@
 package main.java.botiga.venda;
 
 import main.java.botiga.producte.Producte;
+import main.java.botiga.usuari.Usuari;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -19,8 +20,8 @@ public class GestorVendes {
     public void afegirVenda(Venda venda){
         llista_vendes.add(venda);
     }
-    public void buscarVenda(Venda venda){
-        for (Venda venda2 : llista_vendes){
+    public void buscarVenda(String nom, LocalDate dia){
+        for (Usuari usuari : ){
             if (venda2.equals(venda)){
                 System.out.println(venda);
             }
@@ -30,22 +31,31 @@ public class GestorVendes {
         }
 
     }
-    public void vendesPeriode(LocalDate dataInici, LocalDate dataFi){
+    public ArrayList<Venda> vendesPeriode(LocalDate dataInici, LocalDate dataFi){
+        ArrayList<Venda> resultat = new ArrayList<>();
         for (Venda venda : llista_vendes){
             LocalDate dataVenda = venda.getData();
             if ((dataVenda.isEqual(dataInici) || dataVenda.isAfter(dataInici)) &&
                     (dataVenda.isEqual(dataFi) || dataVenda.isBefore(dataFi))) {
-                System.out.println(venda);
+                resultat.add(venda);
             }
         }
+        return resultat;
     }
 
 
     public void vendesProducte(Producte producte){
-        HashMap<String,Integer> producteQuantitat = new HashMap<>();
-        for (Venda venda : llista_vendes)  {
-            for (Transaccio transaccio: )
-        }
+        for (Venda venda : llista_vendes) {
+            for (Transaccio transaccio : venda.getLlistaTransaccio()) {
+                String nomProducte = transaccio.getProducte().getNom();
+                int quantitat = transaccio.getQuantitat();
+                System.out.println(nomProducte + quantitat);
 
+            }
+        }
+    }
+
+    public ArrayList<Venda> getLlista_vendes() {
+        return llista_vendes;
     }
 }
