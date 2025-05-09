@@ -49,7 +49,6 @@ public class GestorUsuaris {
 
     public void setLlistaUsuaris(List<Usuari> llistaUsuaris) {
         this.llistaUsuaris = llistaUsuaris;
-
     }
 }
 
