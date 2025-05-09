@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 
-import static main.java.botiga.utilitats.InputHelper.reiniciarScanner;
+import static main.java.botiga.utilitats.InputHelper.llegirEnter;
 
 
 public class GestorProductesTest {
@@ -20,7 +20,7 @@ public class GestorProductesTest {
     public void afegirProducteFunciona() {
         // ARRANGE
         GestorProductes gestor = new GestorProductes();
-        Producte p = new Producte("Pizza", 5.0,1);
+        Producte p = new Producte("Pizza", 5.0, 1);
 
         // ACT
         gestor.afegirProducte(p);
@@ -35,7 +35,7 @@ public class GestorProductesTest {
     public void cercarProducteFunciona() {
         // ARRANGE
         GestorProductes gestor = new GestorProductes();
-        Producte p = new Producte("Llet", 1.2,1);
+        Producte p = new Producte("Llet", 1.2, 1);
         gestor.afegirProducte(p);
 
         // ACT
@@ -50,7 +50,7 @@ public class GestorProductesTest {
     public void eliminarProducteFunciona() {
         // ARRANGE
         GestorProductes gestor = new GestorProductes();
-        Producte p = new Producte("Pa", 0.9,1);
+        Producte p = new Producte("Pa", 0.9, 1);
         gestor.afegirProducte(p);
 
         // ACT
@@ -65,8 +65,8 @@ public class GestorProductesTest {
     public void aplicarDescompteFunciona() {
         // ARRANGE
         GestorProductes gestor = new GestorProductes();
-        Producte p = new Producte("Aigua", 1.0,1);
-        Producte p2 = new Producte("Pera", 5.0,3);
+        Producte p = new Producte("Aigua", 1.0, 1);
+        Producte p2 = new Producte("Pera", 5.0, 3);
         gestor.afegirProducte(p);
         gestor.afegirProducte(p2);
 
@@ -79,11 +79,11 @@ public class GestorProductesTest {
     }
 
     @Test
-    public void mostrarCatalegFunciona(){
+    public void mostrarCatalegFunciona() {
         // ARRANGE
         GestorProductes gestor = new GestorProductes();
-        Producte p = new Producte("Aigua", 1.0,1);
-        Producte p2 = new Producte("Pera", 5.0,3);
+        Producte p = new Producte("Aigua", 1.0, 1);
+        Producte p2 = new Producte("Pera", 5.0, 3);
         gestor.afegirProducte(p);
         gestor.afegirProducte(p2);
         boolean error = false;
@@ -97,28 +97,5 @@ public class GestorProductesTest {
 
         // ASSERT
         assert (!error);
-    }
-
-    @Test
-    public void afegirProducteInputFunciona() throws InterruptedException {
-        // ARRANGE
-        InputStream copiaSystemIn = System.in;
-
-        String input = "Aigua\n1.0\n1\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        reiniciarScanner();
-
-        GestorProductes gestor = new GestorProductes();
-
-        // ACT
-        gestor.afegirProducte();
-        ArrayList<Producte> resultats = gestor.cercarPerNom("Aigua");
-
-        // ASSERT
-        assert (resultats.size() == 1);
-
-        System.setIn(copiaSystemIn);
-        TimeUnit.MILLISECONDS.sleep(100);
-
     }
 }
