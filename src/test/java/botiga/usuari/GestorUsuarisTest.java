@@ -10,7 +10,7 @@ import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GestorUsuariTest {
+public class GestorUsuarisTest {
 
     @Test
     public void testAfegirUsuariCorrectament() {
