@@ -134,4 +134,33 @@ public class InputHelperTest {
         TimeUnit.MILLISECONDS.sleep(100);
         assert "abc".equals(result);
     }
+
+    @Test
+    public void LlegirBooleanTrueOK() throws InterruptedException {
+        String input = "si\n";
+        setInputStream(input);
+        boolean result = llegirBoolean("Selecciona una opció: ", "si", "no");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert result;
+    }
+
+    @Test
+    public void LlegirBooleanFalseOK() throws InterruptedException {
+        String input = "no\n";
+        setInputStream(input);
+        boolean result = llegirBoolean("Selecciona una opció: ", "si", "no");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert !result;
+    }
+
+    @Test
+    public void LlegirBooleanInvalidOK() throws InterruptedException {
+        String input = "n\ns\nsI\n";
+        setInputStream(input);
+        boolean result = llegirBoolean("Selecciona una opció: ", "si", "no");
+        TimeUnit.MILLISECONDS.sleep(100);
+        assert result;
+    }
+
+
 }
