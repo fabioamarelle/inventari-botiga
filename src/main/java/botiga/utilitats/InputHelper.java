@@ -3,9 +3,10 @@ package main.java.botiga.utilitats;
 import java.util.Scanner;
 
 public class InputHelper {
-    private static final Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
 
     public static int llegirEnter(String missatge) {
+        Scanner scanner = new Scanner(System.in);
         int num = 0;
         boolean valid = false;
         while (!valid) {
@@ -20,6 +21,7 @@ public class InputHelper {
         return num;
     }
     public static int llegirEnterPositiu(String missatge) {
+        Scanner scanner = new Scanner(System.in);
         int num = 0;
         boolean valid = false;
         while (!valid) {
@@ -36,6 +38,7 @@ public class InputHelper {
         return num;
     }
     public static double llegirDecimal(String missatge) {
+        Scanner scanner = new Scanner(System.in);
         double num = 0.0;
         boolean valid = false;
         while (!valid) {
@@ -50,6 +53,7 @@ public class InputHelper {
         return num;
     }
     public static String llegirString(String missatge){
+        Scanner scanner = new Scanner(System.in);
         String input;
         do
         {
@@ -64,6 +68,7 @@ public class InputHelper {
     }
 
     public static boolean llegirBoolean(String missatge, String opcioTrue, String opcioFalse) {
+        Scanner scanner = new Scanner(System.in);
         String input;
 
         while (true) {

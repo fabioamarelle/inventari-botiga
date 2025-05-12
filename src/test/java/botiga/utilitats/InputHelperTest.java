@@ -32,7 +32,6 @@ public class InputHelperTest {
         String input = "123\n";
         setInputStream(input);
         int result = llegirEnter("Introdueix un número enter");
-        TimeUnit.MILLISECONDS.sleep(100);
         assert 123 == result;
     }
 
@@ -41,7 +40,6 @@ public class InputHelperTest {
         String input = "abc\n456\n";
         setInputStream(input);
         int result = llegirEnter("Introdueix un número enter");
-        TimeUnit.MILLISECONDS.sleep(100);
         assert 456 == result;
     }
 
@@ -50,7 +48,6 @@ public class InputHelperTest {
         String input = "-123\n";
         setInputStream(input);
         int result = llegirEnter("Introdueix un número enter");
-        TimeUnit.MILLISECONDS.sleep(100);
         assert -123 == result;
     }
 
@@ -59,7 +56,6 @@ public class InputHelperTest {
         String input = "123\n";
         setInputStream(input);
         int result = llegirEnterPositiu("Introdueix un número enter positiu");
-        TimeUnit.MILLISECONDS.sleep(100);
         assert 123 == result;
     }
 
@@ -68,7 +64,6 @@ public class InputHelperTest {
         String input = "abc\n456\n";
         setInputStream(input);
         int result = llegirEnterPositiu("Introdueix un número enter positiu");
-        TimeUnit.MILLISECONDS.sleep(100);
         assert 456 == result;
     }
 
