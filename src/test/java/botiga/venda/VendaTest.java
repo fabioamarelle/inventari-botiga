@@ -1,6 +1,7 @@
 package test.java.botiga.venda;
 
 import main.java.botiga.producte.Producte;
+import main.java.botiga.usuari.Rol;
 import main.java.botiga.usuari.Usuari;
 import main.java.botiga.venda.Transaccio;
 import main.java.botiga.venda.Venda;
@@ -39,7 +40,7 @@ public class VendaTest {
     @Test
     public void getUsuariOK(){
         // ARRANGE
-        Usuari usuari = new Usuari("Aitor", "treball@gmail.com","Administrador");
+        Usuari usuari = new Usuari("Aitor", "treball@gmail.com", Rol.ADMINISTRADOR);
         Venda venda = new Venda(LocalDate.of(2006,4,30), usuari);
 
         // ACT
@@ -52,8 +53,8 @@ public class VendaTest {
     @Test
     public void setUsuariOK(){
         // ARRANGE
-        Usuari usuari1 = new Usuari("Aitor", "treball@gmail.com","Administrador");
-        Usuari usuari2 = new Usuari("Yassine", "notreball@gmail.com", "Client");
+        Usuari usuari1 = new Usuari("Aitor", "treball@gmail.com",Rol.ADMINISTRADOR);
+        Usuari usuari2 = new Usuari("Yassine", "notreball@gmail.com", Rol.CLIENT);
         Venda venda = new Venda(LocalDate.of(2006,4,30), usuari1);
 
         // ACT
