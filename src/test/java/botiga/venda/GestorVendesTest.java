@@ -81,9 +81,9 @@ public class GestorVendesTest {
         Producte p1 = new Producte("Cafè", 2.5, 10);
         Producte p2 = new Producte("Te", 1.5, 15);
 
-        Transaccio t1 = new Transaccio(p1, 2); // 2 Cafès
-        Transaccio t2 = new Transaccio(p1, 1); // 1 Cafè més
-        Transaccio t3 = new Transaccio(p2, 3); // 3 Tes
+        Transaccio t1 = new Transaccio(p1, 2,u);
+        Transaccio t2 = new Transaccio(p1, 1,u); // 1 Cafè més
+        Transaccio t3 = new Transaccio(p2, 3,u);
 
         Venda venda1 = new Venda(LocalDate.of(2024, 10, 23), u);
         venda1.afegirTransaccio(t1);
