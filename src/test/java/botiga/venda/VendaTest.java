@@ -83,10 +83,10 @@ public class VendaTest {
         // ARRANGE
         ArrayList<Transaccio> llistaTransaccio = new ArrayList<>();
         Venda venda = new Venda(LocalDate.of(2006,4,30));
-
+        Usuari client = new Usuari("Felipe", "felipe@gmail.com", "client");
         Producte producte = new Producte("Ratolí", 10, 25);
-        Transaccio transaccio1 = new Transaccio(producte, 3);
-        Transaccio transaccio2 = new Transaccio(producte, 6);
+        Transaccio transaccio1 = new Transaccio(producte, 3, client);
+        Transaccio transaccio2 = new Transaccio(producte, 6, client);
 
         llistaTransaccio.add(transaccio1);
         venda.afegirTransaccio(transaccio2);
@@ -103,10 +103,10 @@ public class VendaTest {
     public void esborrarTransaccio(){
         // ARRANGE
         Venda venda = new Venda(LocalDate.of(2006,4,30));
-
+        Usuari client = new Usuari("Felipe", "felipe@gmail.com", "client");
         Producte producte = new Producte("Ratolí", 10, 25);
-        Transaccio transaccio1 = new Transaccio(producte, 3);
-        Transaccio transaccio2 = new Transaccio(producte, 6);
+        Transaccio transaccio1 = new Transaccio(producte, 3, client);
+        Transaccio transaccio2 = new Transaccio(producte, 6, client);
 
         // ACT
         venda.afegirTransaccio(transaccio1);
@@ -116,6 +116,4 @@ public class VendaTest {
         // ASSERT
         assert venda.getLlistaTransaccio().size() == 1;
     }
-
-
 }
