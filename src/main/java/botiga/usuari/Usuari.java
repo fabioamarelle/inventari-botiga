@@ -30,4 +30,9 @@ public class Usuari {
     public boolean esAdministrador() {
         return rol == Rol.ADMINISTRADOR;
     }
+
+    @Override
+    public String toString() {
+        return "[ Nom: " + nom + ", " + "Correu electrònic: " + correuElectronic + ", " + "Rol: " + rol + " ]";
+    }
 }
