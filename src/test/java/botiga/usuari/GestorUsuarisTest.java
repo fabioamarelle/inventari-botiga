@@ -59,8 +59,8 @@ public class GestorUsuarisTest {
 
         assert (llistaUsuari != null);
         assert (llistaUsuari.size() == 2);
-        assert (Objects.equals(llistaUsuari.get(0), usuari1));
-        assert (Objects.equals(llistaUsuari.get(1), usuari2));
+        assert (Objects.equals(llistaUsuari.getFirst(), usuari1));
+        assert (Objects.equals(llistaUsuari.getLast(), usuari2));
     }
 
     @Test
