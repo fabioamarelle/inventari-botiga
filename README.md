@@ -7,6 +7,8 @@ Desenvolupament d'un sistema de gestió d'inventari per a una botiga.
 
 [Documentació GitHub (correu @institutjaumehuguet.cat)](https://docs.google.com/document/d/1VG1L9SKpDAiFMKlEdNU4IHNOrJPr7NskyvFRyqznFXQ/edit?usp=sharing "Documentació GitHub")
 
+[KanbanFlow (cal demanar accés)](https://kanbanflow.com/board/3xN3DGp)
+
 ### **Estructura del projecte Java: descripció tècnica i funcional**
 Aquest projecte està organitzat en paquets que representen les diferents funcionalitats del sistema. Cada paquet conté les classes responsables de gestionar una part concreta de lògica, amb una arquitectura que segueix principis de responsabilitat única, modularitat i separació de preocupacions. Això ens permet dissenyar un sistema escalable, col·laboratiu i fàcil de mantenir.
 

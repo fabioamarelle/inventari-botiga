@@ -1,16 +1,19 @@
 package main.java.botiga.usuari;
 
+
+//usuari
 public class Usuari {
-    // crem els 3 atributs
     private String nom;
     private String correuElectronic;
-    private String rol; // "administrador" o "client"
-    // Generem get/set i construcutor
-    public Usuari(String nom, String correuElectronic, String rol) {
+    private Rol rol;
+
+    public Usuari(String nom, String correuElectronic, Rol rol) {
         this.nom = nom;
         this.correuElectronic = correuElectronic;
         this.rol = rol;
     }
+
+
 
     public String getNom() {
         return nom;
@@ -20,12 +23,11 @@ public class Usuari {
         return correuElectronic;
     }
 
-    public String getRol() {
+    public Rol getRol() {
         return rol;
     }
 
     public boolean esAdministrador() {
-        return "administrador".equalsIgnoreCase(rol);
+        return rol == Rol.ADMINISTRADOR;
     }
 }
-
