@@ -1,6 +1,7 @@
 package test.java.botiga.venda;
 
 import main.java.botiga.producte.Producte;
+import main.java.botiga.usuari.Rol;
 import main.java.botiga.usuari.Usuari;
 import main.java.botiga.venda.Transaccio;
 import main.java.botiga.venda.Venda;
@@ -39,7 +40,7 @@ public class VendaTest {
     @Test
     public void getUsuariOK(){
         // ARRANGE
-        Usuari usuari = new Usuari("Aitor", "treball@gmail.com","Administrador");
+        Usuari usuari = new Usuari("Aitor", "treball@gmail.com", Rol.ADMINISTRADOR);
         Venda venda = new Venda(LocalDate.of(2006,4,30), usuari);
 
         // ACT
@@ -52,8 +53,8 @@ public class VendaTest {
     @Test
     public void setUsuariOK(){
         // ARRANGE
-        Usuari usuari1 = new Usuari("Aitor", "treball@gmail.com","Administrador");
-        Usuari usuari2 = new Usuari("Yassine", "notreball@gmail.com", "Client");
+        Usuari usuari1 = new Usuari("Aitor", "treball@gmail.com",Rol.ADMINISTRADOR);
+        Usuari usuari2 = new Usuari("Yassine", "notreball@gmail.com", Rol.CLIENT);
         Venda venda = new Venda(LocalDate.of(2006,4,30), usuari1);
 
         // ACT
@@ -83,10 +84,10 @@ public class VendaTest {
         // ARRANGE
         ArrayList<Transaccio> llistaTransaccio = new ArrayList<>();
         Venda venda = new Venda(LocalDate.of(2006,4,30));
-
+        Usuari client = new Usuari("Felipe", "felipe@gmail.com", Rol.CLIENT);
         Producte producte = new Producte("Ratolí", 10, 25);
-        Transaccio transaccio1 = new Transaccio(producte, 3);
-        Transaccio transaccio2 = new Transaccio(producte, 6);
+        Transaccio transaccio1 = new Transaccio(producte, 3, client);
+        Transaccio transaccio2 = new Transaccio(producte, 6, client);
 
         llistaTransaccio.add(transaccio1);
         venda.afegirTransaccio(transaccio2);
@@ -103,10 +104,10 @@ public class VendaTest {
     public void esborrarTransaccio(){
         // ARRANGE
         Venda venda = new Venda(LocalDate.of(2006,4,30));
-
+        Usuari client = new Usuari("Felipe", "felipe@gmail.com", Rol.CLIENT);
         Producte producte = new Producte("Ratolí", 10, 25);
-        Transaccio transaccio1 = new Transaccio(producte, 3);
-        Transaccio transaccio2 = new Transaccio(producte, 6);
+        Transaccio transaccio1 = new Transaccio(producte, 3, client);
+        Transaccio transaccio2 = new Transaccio(producte, 6, client);
 
         // ACT
         venda.afegirTransaccio(transaccio1);
@@ -116,6 +117,4 @@ public class VendaTest {
         // ASSERT
         assert venda.getLlistaTransaccio().size() == 1;
     }
-
-
 }

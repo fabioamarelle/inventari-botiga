@@ -3,12 +3,12 @@ package test.java.botiga.usuari;
 import main.java.botiga.usuari.GestorUsuaris;
 import main.java.botiga.usuari.Rol;
 import main.java.botiga.usuari.Usuari;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 public class GestorUsuarisTest {
 
@@ -59,8 +59,8 @@ public class GestorUsuarisTest {
 
         assert (llistaUsuari != null);
         assert (llistaUsuari.size() == 2);
-        assert (Objects.equals(llistaUsuari.getFirst(), usuari1));
-        assert (Objects.equals(llistaUsuari.getLast(), usuari2));
+        assert (Objects.equals(llistaUsuari.get(0), usuari1));
+        assert (Objects.equals(llistaUsuari.get(1), usuari2));
     }
 
     @Test
