@@ -1,6 +1,7 @@
 package main.java.botiga.venda;
 
 import main.java.botiga.producte.Producte;
+import main.java.botiga.usuari.GestorUsuaris;
 import main.java.botiga.usuari.Usuari;
 
 import java.time.LocalDate;
@@ -13,23 +14,37 @@ public class GestorVendes {
     // i manté la coherència del sistema.
 
     private ArrayList<Venda> llista_vendes = new ArrayList<>();
-
+    private GestorUsuaris gestorUsuaris;
     public GestorVendes() {
         this.llista_vendes = new ArrayList<>();
     }
     public void afegirVenda(Venda venda){
         llista_vendes.add(venda);
     }
-    public void buscarVenda(String nom, LocalDate dia){
-        for (Usuari usuari : ){
-            if (venda2.equals(venda)){
-                System.out.println(venda);
-            }
-            else {
-                System.out.println("No existeix aquesta venda.");
+    public void setGestorUsuaris(GestorUsuaris gestorUsuaris) {
+        this.gestorUsuaris = gestorUsuaris;
+    }
+    public ArrayList<Venda> buscarVenda(String nom, LocalDate dia) {
+        ArrayList<Venda> resultat = new ArrayList<>();
+        boolean vendaTrobada = false;
+
+        for (Usuari usuari : gestorUsuaris.getLlistaUsuaris()) {
+            if (usuari.getNom().equals(nom)) {
+                for (Venda venda : llista_vendes) {
+                    if (venda.getData().equals(dia)) {
+                        System.out.println(venda);
+                        resultat.add(venda);
+                        vendaTrobada = true;
+                    }
+                }
             }
         }
 
+        if (!vendaTrobada) {
+            System.out.println("No existeix aquesta venda.");
+        }
+
+        return resultat; //
     }
     public ArrayList<Venda> vendesPeriode(LocalDate dataInici, LocalDate dataFi){
         ArrayList<Venda> resultat = new ArrayList<>();
@@ -39,20 +54,24 @@ public class GestorVendes {
                     (dataVenda.isEqual(dataFi) || dataVenda.isBefore(dataFi))) {
                 resultat.add(venda);
             }
+
         }
         return resultat;
     }
 
 
-    public void vendesProducte(Producte producte){
+    public int vendesProducte(Producte producte) {
+        int totalVendes = 0;
+
         for (Venda venda : llista_vendes) {
             for (Transaccio transaccio : venda.getLlistaTransaccio()) {
-                String nomProducte = transaccio.getProducte().getNom();
-                int quantitat = transaccio.getQuantitat();
-                System.out.println(nomProducte + quantitat);
-
+                if (transaccio.getProducte().equals(producte)) {
+                    totalVendes++;
+                }
             }
         }
+
+        return totalVendes;
     }
 
     public ArrayList<Venda> getLlista_vendes() {
