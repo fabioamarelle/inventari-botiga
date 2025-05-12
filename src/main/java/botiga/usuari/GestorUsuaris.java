@@ -23,9 +23,9 @@ public class GestorUsuaris {
     }
 
     public void afegirUsuari() {
-        String nom = InputHelper.llegirString("Introdueix el nom:");
-        String correuElectronic = InputHelper.llegirString("Introdueix el correu electrònic:");
-        boolean esAdministrador = InputHelper.llegirBoolean("Introdueix el rol:", "Administrador", "Client");
+        String nom = InputHelper.llegirString("Introdueix el nom: ");
+        String correuElectronic = InputHelper.llegirString("Introdueix el correu electrònic: ");
+        boolean esAdministrador = InputHelper.llegirBoolean("Introdueix el rol: ", "Administrador", "Client");
 
         if (esAdministrador){
             Rol rol = Rol.ADMINISTRADOR;
@@ -34,6 +34,7 @@ public class GestorUsuaris {
             Rol rol = Rol.CLIENT;
             llistaUsuaris.add(new Usuari(nom, correuElectronic, rol));
         }
+        System.out.println("Usuari afegit.");
 
     }
 
@@ -55,6 +56,16 @@ public class GestorUsuaris {
         return null;
     }
 
+    public Usuari obtenirUsuari() {
+        String correuElectronic = InputHelper.llegirString("Introdueix el correu electrònic de l'usuari a buscar: ");
+        for (Usuari u : llistaUsuaris) {
+            if (u.getCorreuElectronic().equalsIgnoreCase(correuElectronic)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Usuari> getTotsUsuaris() {
         return new ArrayList<>(llistaUsuaris);
     }
@@ -66,5 +77,13 @@ public class GestorUsuaris {
     public void setLlistaUsuaris(ArrayList<Usuari> llistaUsuaris) {
         this.llistaUsuaris = llistaUsuaris;
     }
-}
 
+    public void esborrarUsuari(String correuElectronic) {
+        llistaUsuaris.remove(obtenirUsuari(correuElectronic));
+    }
+
+    public void esborrarUsuari() {
+        String correuElectronic = InputHelper.llegirString("Introdueix el correu electrònic de l'usuari a esborrar: ");
+        llistaUsuaris.remove(obtenirUsuari(correuElectronic));
+    }
+}
