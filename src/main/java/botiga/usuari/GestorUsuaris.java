@@ -84,6 +84,11 @@ public class GestorUsuaris {
 
     public void esborrarUsuari() {
         String correuElectronic = InputHelper.llegirString("Introdueix el correu electrònic de l'usuari a esborrar: ");
-        llistaUsuaris.remove(obtenirUsuari(correuElectronic));
+        boolean esborrat = llistaUsuaris.remove(obtenirUsuari(correuElectronic));
+        if (esborrat) {
+            System.out.println("Usuari esborrat.");
+        } else{
+            System.out.println("Error: Usuari no trobat.");
+        }
     }
 }
