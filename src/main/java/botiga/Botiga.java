@@ -1,5 +1,6 @@
 package main.java.botiga;
 
+import com.beust.jcommander.IDefaultProvider;
 import main.java.botiga.producte.GestorProductes;
 import main.java.botiga.producte.Producte;
 import main.java.botiga.usuari.GestorUsuaris;
@@ -9,6 +10,8 @@ import main.java.botiga.utilitats.TableHelper;
 import main.java.botiga.venda.GestorVendes;
 import main.java.botiga.venda.Venda;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Botiga {
@@ -158,20 +161,61 @@ public class Botiga {
                     InputHelper.enterPerContinuar();
                     break;
                 case 3:
-                    ArrayList<Venda> vendesTrobades = gestorVendes.buscarVenda();
-                    if (!vendesTrobades.isEmpty()) {
-                        if (vendesTrobades.size() == 1){
-                            System.out.println("S'ha trobat la següent venda: ");
-                        } else {
-                            System.out.println("S'han trobat les següents vendes: ");
-                        }
-                        System.out.println(TableHelper.llistaATaula("Vendes", vendesTrobades));
-                    } else {
-                        System.out.println("Error: Venda no trobada.");
-                    }
+                    System.out.println("\t [1] Buscar una venda directament");
+                    System.out.println("\t [2] Buscar per període de temps");
+                    System.out.println("\t [3] Buscar per producte");
+                    int menuBuscarVendes = InputHelper.llegirEnter("Selecciona una opció: ");
+                    switch (menuBuscarVendes) {
+                        case 1:
+                            ArrayList<Venda> vendesTrobades = gestorVendes.buscarVenda();
+                            if (!vendesTrobades.isEmpty()) {
+                                if (vendesTrobades.size() == 1) {
+                                    System.out.println("S'ha trobat la següent venda: ");
+                                } else {
+                                    System.out.println("S'han trobat les següents vendes: ");
+                                }
+                                System.out.println(TableHelper.llistaATaula("Vendes", vendesTrobades));
+                            } else {
+                                System.out.println("Error: Venda no trobada.");
+                            }
+                            break;
 
-                    InputHelper.enterPerContinuar();
+                        case 2:
+                            LocalDate dataInici = InputHelper.llegirData("Introdueix la data d'inici: ");
+                            LocalDate dataFi = InputHelper.llegirData("Introdueix la data de fi: ");
+
+                            ArrayList<Venda> vendesPerPeriode = gestorVendes.vendesPeriode(dataInici, dataFi);
+                            if (!vendesPerPeriode.isEmpty()) {
+                                if (vendesPerPeriode.size() == 1) {
+                                    System.out.println("S'ha trobat la següent venda: ");
+                                } else {
+                                    System.out.println("S'han trobat les següents vendes: ");
+                                }
+                                System.out.println(TableHelper.llistaATaula("Vendes", vendesPerPeriode));
+                            } else {
+                                System.out.println("Error: No és una opció vàlida. Torna a intentar-ho.");
+                            }
+                            InputHelper.enterPerContinuar();
+                            break;
+
+                        case 3:
+                            ArrayList<Producte> productesTrobats = gestorProductes.cercarProductesPerNom();
+                            if (productesTrobats.isEmpty()) {
+                                System.out.println("No s'han trobat productes.");
+                            } else if (productesTrobats.size() >= 2) {
+                                System.out.println("S'ha trobat més d'un producte. No es pot realitzar la cerca.");
+                            } else {
+                                ArrayList<Venda> vendesPerProducte = gestorVendes.vendesProducte(productesTrobats.get(0));
+                                System.out.println(TableHelper.llistaATaula("Vendes", vendesPerProducte));
+                            }
+                            InputHelper.enterPerContinuar();
+                            break;
+                        default:
+                            System.out.println("Error: No és una opció vàlida. Torna a intentar-ho.");
+                    }
                     break;
+
+
                 case 4:
                     System.out.println("Mostrant totes les vendes: ");
                     ArrayList<Venda> llistaVendes = gestorVendes.getLlistaVendes();
