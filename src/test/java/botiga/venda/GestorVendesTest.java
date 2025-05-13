@@ -91,7 +91,7 @@ public class GestorVendesTest {
         gestorVendes.afegirVenda(venda1);
         gestorVendes.afegirVenda(venda2);
 
-        int totalVendesCafe = gestorVendes.vendesProducte(producte1);
+        int totalVendesCafe = gestorVendes.vendesProducte(producte1).size();
 
         assert totalVendesCafe == 2;
     }

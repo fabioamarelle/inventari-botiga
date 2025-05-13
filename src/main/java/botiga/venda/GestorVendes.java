@@ -125,7 +125,6 @@ public class GestorVendes {
             if (usuari.getCorreuElectronic().equals(correuElectronic)) {
                 for (Venda venda : llistaVendes) {
                     if (venda.getData().equals(data)) {
-                        System.out.println(venda);
                         resultat.add(venda);
                         vendaTrobada = true;
                     }
@@ -154,18 +153,17 @@ public class GestorVendes {
     }
 
 
-    public int vendesProducte(Producte producte) {
-        int totalVendes = 0;
+    public ArrayList<Venda> vendesProducte(Producte producte) {
+        ArrayList<Venda> vendesAmbProducte = new ArrayList<>();
 
         for (Venda venda : llistaVendes) {
             for (Transaccio transaccio : venda.getLlistaTransaccio()) {
                 if (transaccio.getProducte().equals(producte)) {
-                    totalVendes++;
+                    vendesAmbProducte.add(venda);
                 }
             }
         }
-
-        return totalVendes;
+        return vendesAmbProducte;
     }
 
     public void esborrarVenda(Venda venda){
