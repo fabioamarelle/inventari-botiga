@@ -24,7 +24,7 @@ public class IntegrationTest {
 
         assert (usuari == Botiga.gestorUsuaris.obtenirUsuari(usuari.getCorreuElectronic()));
         assert (producte == Botiga.gestorProductes.cercarProducte(producte.getNom()));
-        assert (venda == Botiga.gestorVendes.buscarVenda(venda.getUsuari().getCorreuElectronic(), venda.getData()).getFirst());
+        assert (venda == Botiga.gestorVendes.buscarVenda(venda.getUsuari().getCorreuElectronic(), venda.getData()).get(0));
     }
 
     // Test per a les funcionalitats d'esborrar Usuari, Producte i Venda
@@ -40,7 +40,7 @@ public class IntegrationTest {
 
         Venda venda = new Venda(LocalDate.of(2025, 5, 13), usuari);
         Botiga.gestorVendes.afegirVenda(venda);
-        assert (venda == Botiga.gestorVendes.buscarVenda(venda.getUsuari().getCorreuElectronic(), venda.getData()).getFirst());
+        assert (venda == Botiga.gestorVendes.buscarVenda(venda.getUsuari().getCorreuElectronic(), venda.getData()).get(0));
 
         Botiga.gestorUsuaris.esborrarUsuari(usuari.getCorreuElectronic());
         Botiga.gestorProductes.eliminarProducte(producte.getNom());
@@ -63,9 +63,9 @@ public class IntegrationTest {
         Venda venda = new Venda(LocalDate.of(2025, 5, 13), usuari);
         Botiga.gestorVendes.afegirVenda(venda);
 
-        assert (usuari == Botiga.gestorUsuaris.getTotsUsuaris().getFirst());
-        assert (producte == Botiga.gestorProductes.getCataleg().getFirst());
-        assert (venda == Botiga.gestorVendes.getLlistaVendes().getFirst());
+        assert (usuari == Botiga.gestorUsuaris.getTotsUsuaris().get(0));
+        assert (producte == Botiga.gestorProductes.getCataleg().get(0));
+        assert (venda == Botiga.gestorVendes.getLlistaVendes().get(0));
     }
 }
 
