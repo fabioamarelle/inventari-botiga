@@ -20,7 +20,8 @@ public class Botiga {
     private static boolean sortirMenuProductes = false;
 
     public static void menu(){
-        while (true){
+        boolean sortirMenu = false;
+        while (!sortirMenu){
             System.out.println("Gestor d'una botiga online");
             System.out.println("\t [1] Gestionar usuaris");
             System.out.println("\t [2] Gestionar productes");
@@ -41,7 +42,7 @@ public class Botiga {
                     sortirMenuVendes = false;
                     break;
                 case 4:
-                    System.exit(0);
+                    sortirMenu = true;
                     break;
             }
         }
