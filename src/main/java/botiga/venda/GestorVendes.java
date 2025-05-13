@@ -64,8 +64,9 @@ public class GestorVendes {
             if ((producte.getStock() - quantitat) < 0) {
                 System.out.println("No hi ha suficient stock. No s'ha realitzat la transacció.");
             } else {
+                producte.setStock(producte.getStock() - quantitat);
                 Transaccio transaccio = new Transaccio(producte, quantitat);
-                venda.getLlistaTransaccio().add(transaccio);
+                venda.afegirTransaccio(transaccio);
                 System.out.println("S'ha afegit la transacció.");
             }
 
@@ -103,7 +104,6 @@ public class GestorVendes {
 
     public ArrayList<Venda> buscarVenda() {
         ArrayList<Venda> resultat = new ArrayList<>();
-
         LocalDate data;
         while (true) {
             try {
