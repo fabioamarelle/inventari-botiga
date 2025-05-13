@@ -1,5 +1,7 @@
 package main.java.botiga.utilitats;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class InputHelper {
@@ -86,6 +88,23 @@ public class InputHelper {
             }
 
         }
+
+
+    }
+    public static LocalDate llegirData(String missatge){
+        LocalDate data;
+
+        while (true) {
+            try {
+                String dataString = InputHelper.llegirString(missatge + "(DD-MM-YYYY): ");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                data = LocalDate.parse(dataString, formatter);
+                break;
+            } catch (Exception e) {
+                System.out.println("Error: Format de la data incorrecte.");
+            }
+        }
+        return data;
     }
 
     public static void enterPerContinuar(){
