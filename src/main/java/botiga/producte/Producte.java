@@ -42,7 +42,9 @@ public class Producte {
 
         @Override
         public String toString() {
-            return "Producte{" + "nom='" + nom + '\'' + ", preu=" + preu + ", stock=" + stock + '}';
+            return this.getNom() + " (Preu: " + getPreu() + "€, Stock: " + getStock() + ")";
+
+
         }
     }
 
