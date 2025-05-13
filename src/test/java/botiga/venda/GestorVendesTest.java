@@ -95,4 +95,25 @@ public class GestorVendesTest {
 
         assert totalVendesCafe == 2;
     }
+
+    @Test
+    public void testEsborrarVenda(){
+        GestorVendes gestorVendes = new GestorVendes();
+        Usuari usuari1 = new Usuari("Yassine", "yassine@gmail.com", Rol.ADMINISTRADOR);
+        Usuari usuari2 = new Usuari("Aitor", "aitor@gmail.com", Rol.CLIENT);
+
+        Venda venda1 = new Venda(LocalDate.of(2024, 10, 11), usuari1);
+        gestorVendes.afegirVenda(venda1);
+        Venda venda2 = new Venda(LocalDate.of(2024, 3, 22), usuari2);
+        gestorVendes.afegirVenda(venda2);
+
+        gestorVendes.esborrarVenda(venda2);
+
+        assert (gestorVendes.getLlistaVendes().contains(venda1));
+        assert (!gestorVendes.getLlistaVendes().contains(venda2));
+
+        assert (gestorVendes.getLlistaVendes().size() == 1);
+    }
+
+
 }
