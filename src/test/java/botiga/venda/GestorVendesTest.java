@@ -10,7 +10,6 @@ import main.java.botiga.venda.Venda;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GestorVendesTest {
@@ -23,7 +22,7 @@ public class GestorVendesTest {
 
         gestorVendes.afegirVenda(venda);
 
-        assert gestorVendes.getLlista_vendes().size() == 1;
+        assert gestorVendes.getLlistaVendes().size() == 1;
     }
 
     @Test
@@ -78,9 +77,9 @@ public class GestorVendesTest {
         Producte producte1 = new Producte("Cafè", 2.5, 10);
         Producte producte2 = new Producte("Te", 1.5, 15);
 
-        Transaccio transaccio1 = new Transaccio(producte1, 2, usuari);  // 2 Cafès
-        Transaccio transaccio2 = new Transaccio(producte1, 1, usuari);  // 1 Cafè més
-        Transaccio transaccio3 = new Transaccio(producte2, 3, usuari);  // 3 Tés
+        Transaccio transaccio1 = new Transaccio(producte1, 2);  // 2 Cafès
+        Transaccio transaccio2 = new Transaccio(producte1, 1);  // 1 Cafè més
+        Transaccio transaccio3 = new Transaccio(producte2, 3);  // 3 Tés
 
         Venda venda1 = new Venda(LocalDate.of(2024, 10, 23), usuari);
         venda1.afegirTransaccio(transaccio1);
@@ -92,8 +91,8 @@ public class GestorVendesTest {
         gestorVendes.afegirVenda(venda1);
         gestorVendes.afegirVenda(venda2);
 
-        int totalVendesCafè = gestorVendes.vendesProducte(producte1);
+        int totalVendesCafe = gestorVendes.vendesProducte(producte1);
 
-        assert totalVendesCafè == 2;
+        assert totalVendesCafe == 2;
     }
 }

@@ -1,10 +1,14 @@
 package main.java.botiga.venda;
 
+import main.java.botiga.Botiga;
+import main.java.botiga.producte.GestorProductes;
 import main.java.botiga.producte.Producte;
 import main.java.botiga.usuari.GestorUsuaris;
 import main.java.botiga.usuari.Usuari;
+import main.java.botiga.utilitats.InputHelper;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class GestorVendes {
@@ -13,24 +17,74 @@ public class GestorVendes {
     // per producte. Aquesta classe assegura la persistència temporal de les vendes realitzades dins de la sessió
     // i manté la coherència del sistema.
 
-    private ArrayList<Venda> llista_vendes = new ArrayList<>();
-    private GestorUsuaris gestorUsuaris;
+    private final ArrayList<Venda> llistaVendes;
+    private GestorUsuaris gestorUsuaris = Botiga.gestorUsuaris;
+
     public GestorVendes() {
-        this.llista_vendes = new ArrayList<>();
+        this.llistaVendes = new ArrayList<>();
     }
     public void afegirVenda(Venda venda){
-        llista_vendes.add(venda);
+        llistaVendes.add(venda);
     }
+
+    public void afegirVenda(GestorProductes gestorProductes){
+        LocalDate data;
+        while (true) {
+            try {
+                String dataString = InputHelper.llegirString("Introdueix la data de la venda (DD-MM-YYYY): ");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                data = LocalDate.parse(dataString, formatter);
+                break;
+            } catch (Exception e) {
+                System.out.println("Error: Format de la data incorrecte.");
+            }
+        }
+        Usuari usuari = null;
+        while (usuari == null) {
+            usuari = this.gestorUsuaris.obtenirUsuari(InputHelper.llegirString("Introdueix el correu electrònic de l'usuari: "));
+            if (usuari == null){
+                System.out.println("Error. Usuari no trobat.");
+            }
+        }
+        Venda venda = new Venda(data, usuari);
+
+        System.out.println("Introduint transaccions: ");
+        boolean introduintTransaccions = true;
+        while (introduintTransaccions){
+            Producte producte = null;
+            while (producte == null){
+                producte = gestorProductes.cercarProducte(InputHelper.llegirString("Introdueix el nom del producte: "));
+                if (producte == null){
+                    System.out.println("Error. Producte no trobat.");
+                }
+            }
+
+
+            int quantitat = InputHelper.llegirEnterPositiu("Introdueix la quantitat comprada: ");
+            if ((producte.getStock() - quantitat) < 0) {
+                System.out.println("No hi ha suficient stock. No s'ha realitzat la transacció.");
+            } else {
+                Transaccio transaccio = new Transaccio(producte, quantitat);
+                venda.getLlistaTransaccio().add(transaccio);
+                System.out.println("S'ha afegit la transacció.");
+            }
+
+            introduintTransaccions = InputHelper.llegirBoolean("Vols continuar introduïnt transaccions?: ", "S", "N");
+        }
+        llistaVendes.add(venda);
+    }
+
     public void setGestorUsuaris(GestorUsuaris gestorUsuaris) {
         this.gestorUsuaris = gestorUsuaris;
     }
-    public ArrayList<Venda> buscarVenda(String nom, LocalDate dia) {
+
+    public ArrayList<Venda> buscarVenda(String correuElectronic, LocalDate dia) {
         ArrayList<Venda> resultat = new ArrayList<>();
         boolean vendaTrobada = false;
 
         for (Usuari usuari : gestorUsuaris.getLlistaUsuaris()) {
-            if (usuari.getNom().equals(nom)) {
-                for (Venda venda : llista_vendes) {
+            if (usuari.getCorreuElectronic().equals(correuElectronic)) {
+                for (Venda venda : llistaVendes) {
                     if (venda.getData().equals(dia)) {
                         System.out.println(venda);
                         resultat.add(venda);
@@ -44,11 +98,51 @@ public class GestorVendes {
             System.out.println("No existeix aquesta venda.");
         }
 
-        return resultat; //
+        return resultat;
     }
-    public ArrayList<Venda> vendesPeriode(LocalDate dataInici, LocalDate dataFi){
+
+    public ArrayList<Venda> buscarVenda() {
         ArrayList<Venda> resultat = new ArrayList<>();
-        for (Venda venda : llista_vendes){
+
+        LocalDate data;
+        while (true) {
+            try {
+
+                String dataString = InputHelper.llegirString("Introdueix la data de la venda (DD-MM-YYYY): ");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                data = LocalDate.parse(dataString, formatter);
+                break;
+            } catch (Exception e) {
+                System.out.println("Error: Format de la data incorrecte.");
+            }
+        }
+
+        String correuElectronic = InputHelper.llegirString("Introdueix el correu electrònic de l'usuari: ");
+
+        boolean vendaTrobada = false;
+
+        for (Usuari usuari : gestorUsuaris.getLlistaUsuaris()) {
+            if (usuari.getCorreuElectronic().equals(correuElectronic)) {
+                for (Venda venda : llistaVendes) {
+                    if (venda.getData().equals(data)) {
+                        System.out.println(venda);
+                        resultat.add(venda);
+                        vendaTrobada = true;
+                    }
+                }
+            }
+        }
+
+        if (!vendaTrobada) {
+            System.out.println("No existeix aquesta venda.");
+        }
+
+        return resultat;
+    }
+
+        public ArrayList<Venda> vendesPeriode(LocalDate dataInici, LocalDate dataFi){
+        ArrayList<Venda> resultat = new ArrayList<>();
+        for (Venda venda : llistaVendes){
             LocalDate dataVenda = venda.getData();
             if ((dataVenda.isEqual(dataInici) || dataVenda.isAfter(dataInici)) &&
                     (dataVenda.isEqual(dataFi) || dataVenda.isBefore(dataFi))) {
@@ -63,7 +157,7 @@ public class GestorVendes {
     public int vendesProducte(Producte producte) {
         int totalVendes = 0;
 
-        for (Venda venda : llista_vendes) {
+        for (Venda venda : llistaVendes) {
             for (Transaccio transaccio : venda.getLlistaTransaccio()) {
                 if (transaccio.getProducte().equals(producte)) {
                     totalVendes++;
@@ -74,7 +168,19 @@ public class GestorVendes {
         return totalVendes;
     }
 
-    public ArrayList<Venda> getLlista_vendes() {
-        return llista_vendes;
+    public void esborrarVenda(Venda venda){
+        llistaVendes.remove(venda);
     }
+
+    public void esborrarVenda(){
+        ArrayList<Venda> vendesAEsborrar = buscarVenda();
+        for (Venda v : vendesAEsborrar){
+            llistaVendes.remove(v);
+        }
+    }
+
+    public ArrayList<Venda> getLlistaVendes() {
+        return llistaVendes;
+    }
+
 }

@@ -52,4 +52,18 @@ public class Venda {
     public void setUsuari(Usuari usuari) {
         this.usuari = usuari;
     }
+
+    public double getPreuVenda(){
+        double preuTotal = 0;
+        for (Transaccio t : this.llistaTransaccio){
+            preuTotal += t.getProducte().getPreu() * t.getQuantitat();
+        }
+        return preuTotal;
+    }
+
+    @Override
+    public String toString() {
+        return data.toString() + " | " +  usuari + " | " + llistaTransaccio + " | Total: " + this.getPreuVenda() + "€";
+
+    }
 }
