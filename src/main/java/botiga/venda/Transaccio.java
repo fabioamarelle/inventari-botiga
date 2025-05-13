@@ -1,26 +1,15 @@
 package main.java.botiga.venda;
 
 import main.java.botiga.producte.Producte;
-import main.java.botiga.usuari.Usuari;
-
 
 public class Transaccio {
-    private Usuari client;
     private Producte producte;
     private int quantitat;
 
-    public Usuari getClient() {
-        return client;
-    }
 
-    public Transaccio(Producte producte, int quantitat, Usuari client) {
+    public Transaccio(Producte producte, int quantitat) {
         this.producte = producte;
         this.quantitat = quantitat;
-        this.client = client;
-    }
-
-    public void setClient(Usuari client) {
-        this.client = client;
     }
 
     public Producte getProducte() {
@@ -39,5 +28,8 @@ public class Transaccio {
         this.quantitat = quantitat;
     }
 
-
+    @Override
+    public String toString() {
+        return producte.getNom() + " (Quantitat: " + quantitat + ")";
+    }
 }

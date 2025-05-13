@@ -1,8 +1,6 @@
 package test.java.botiga.venda;
 
 import main.java.botiga.producte.Producte;
-import main.java.botiga.usuari.Rol;
-import main.java.botiga.usuari.Usuari;
 import main.java.botiga.venda.Transaccio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,9 +10,8 @@ public class TransaccioTest {
     @Test
     public void getProductes(){
         // ARRANGE
-        Usuari client = new Usuari("Jorge", "jorge@gmail.com", Rol.CLIENT);
         Producte producte = new Producte("Ratolí", 10, 25);
-        Transaccio transaccio = new Transaccio(producte,21,client);
+        Transaccio transaccio = new Transaccio(producte,21);
 
 
         // ACT
@@ -27,10 +24,9 @@ public class TransaccioTest {
     @Test
     public void setProductes() {
         // ARRANGE
-        Usuari client = new Usuari("Jorge", "jorge@gmail.com", Rol.CLIENT);
         Producte producteOriginal = new Producte("Ratolí", 10, 25);
         Producte producteNou = new Producte("Monitor", 115, 30);
-        Transaccio transaccio = new Transaccio(producteOriginal, 21, client);
+        Transaccio transaccio = new Transaccio(producteOriginal, 21);
 
         // ACT
         transaccio.setProducte(producteNou);
@@ -43,11 +39,10 @@ public class TransaccioTest {
     @Test
     public void getQuantitat() {
         // ARRANGE
-        Usuari client = new Usuari("Antonio", "antonio@gmail.com", Rol.CLIENT);
         Producte producte = new Producte("Ratolí", 10, 25);
         int quantitatEsperada = 21;
 
-        Transaccio transaccio = new Transaccio(producte, quantitatEsperada, client);
+        Transaccio transaccio = new Transaccio(producte, quantitatEsperada);
 
         // ACT
         int result = transaccio.getQuantitat();
@@ -59,12 +54,11 @@ public class TransaccioTest {
     @Test
     public void setQuantitat() {
         // ARRANGE
-        Usuari client = new Usuari("Antonio", "antonio@gmail.com", Rol.CLIENT);
         Producte producte = new Producte("Ratolí", 10, 25);
         int quantitatInicial = 10;
         int quantitatNova = 21;
 
-        Transaccio transaccio = new Transaccio(producte, quantitatInicial, client);
+        Transaccio transaccio = new Transaccio(producte, quantitatInicial);
 
         // ACT
         transaccio.setQuantitat(quantitatNova);
@@ -73,39 +67,4 @@ public class TransaccioTest {
         // ASSERT
         Assertions.assertEquals(quantitatNova, result);
     }
-
-    @Test
-    public void getClient() {
-        // ARRANGE
-        Usuari clientEsperat = new Usuari("Adrian", "adrian@gmail.com", Rol.CLIENT);
-        Producte producte = new Producte("Pantalla", 115, 45);
-        int quantitat = 5;
-
-        Transaccio transaccio = new Transaccio(producte, quantitat, clientEsperat);
-
-        // ACT
-        Usuari clientResultat = transaccio.getClient();
-
-        // ASSERT
-        Assertions.assertEquals(clientEsperat, clientResultat);
-    }
-
-    @Test
-    public void setClient() {
-        // ARRANGE
-        Usuari clientInicial = new Usuari("Miguel", "miguel@gmail.com", Rol.CLIENT);
-        Usuari clientNou = new Usuari("Laura", "laura@gmail.com", Rol.CLIENT);
-        Producte producte = new Producte("Portàtil", 650, 52);
-        int quantitat = 5;
-
-        Transaccio transaccio = new Transaccio(producte, quantitat, clientInicial);
-
-        // ACT
-        transaccio.setClient(clientNou);
-        Usuari clientResultat = transaccio.getClient();
-
-        // ASSERT
-        Assertions.assertEquals(clientNou, clientResultat);
-    }
-
 }
