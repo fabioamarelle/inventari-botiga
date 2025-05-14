@@ -1,6 +1,5 @@
 package main.java.botiga;
 
-import com.beust.jcommander.IDefaultProvider;
 import main.java.botiga.producte.GestorProductes;
 import main.java.botiga.producte.Producte;
 import main.java.botiga.usuari.GestorUsuaris;
@@ -11,7 +10,6 @@ import main.java.botiga.venda.GestorVendes;
 import main.java.botiga.venda.Venda;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Botiga {
