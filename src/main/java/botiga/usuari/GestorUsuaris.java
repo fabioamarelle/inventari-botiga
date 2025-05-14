@@ -78,12 +78,22 @@ public class GestorUsuaris {
         this.llistaUsuaris = llistaUsuaris;
     }
 
-    public void esborrarUsuari(String correuElectronic) {
-        llistaUsuaris.remove(obtenirUsuari(correuElectronic));
+    public boolean esborrarUsuari(String correu) {
+        Usuari usuari = obtenirUsuari(correu);
+        if (usuari != null) {
+            llistaUsuaris.remove(usuari);
+            return true;
+        }
+        return false;
     }
 
     public void esborrarUsuari() {
         String correuElectronic = InputHelper.llegirString("Introdueix el correu electrònic de l'usuari a esborrar: ");
-        llistaUsuaris.remove(obtenirUsuari(correuElectronic));
+        boolean esborrat = llistaUsuaris.remove(obtenirUsuari(correuElectronic));
+        if (esborrat) {
+            System.out.println("Usuari esborrat.");
+        } else{
+            System.out.println("Error: Usuari no trobat.");
+        }
     }
 }

@@ -1,9 +1,11 @@
 package main.java.botiga.utilitats;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class InputHelper {
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static int llegirEnter(String missatge) {
         Scanner scanner = new Scanner(System.in);
@@ -30,6 +32,8 @@ public class InputHelper {
                 num = Integer.parseInt(scanner.nextLine());
                 if (num > 0) {
                     valid = true;
+                } else {
+                    System.out.println("Error: El número no pot ser negatiu. Torna a intentar-ho.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Error: No és un número vàlid. Torna a intentar-ho.");
@@ -84,6 +88,23 @@ public class InputHelper {
             }
 
         }
+
+
+    }
+    public static LocalDate llegirData(String missatge){
+        LocalDate data;
+
+        while (true) {
+            try {
+                String dataString = InputHelper.llegirString(missatge + "(DD-MM-YYYY): ");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                data = LocalDate.parse(dataString, formatter);
+                break;
+            } catch (Exception e) {
+                System.out.println("Error: Format de la data incorrecte.");
+            }
+        }
+        return data;
     }
 
     public static void enterPerContinuar(){

@@ -33,6 +33,6 @@ public class Usuari {
 
     @Override
     public String toString() {
-        return "[ Nom: " + nom + ", " + "Correu electrònic: " + correuElectronic + ", " + "Rol: " + rol + " ]";
+        return nom + " (" + correuElectronic + ") - " + rol;
     }
 }

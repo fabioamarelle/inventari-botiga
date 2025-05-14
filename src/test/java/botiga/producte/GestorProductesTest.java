@@ -3,15 +3,9 @@ package test.java.botiga.producte;
 import main.java.botiga.producte.Producte;
 import main.java.botiga.producte.GestorProductes;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
-
-import static main.java.botiga.utilitats.InputHelper.llegirEnter;
-
 
 public class GestorProductesTest {
 
@@ -24,7 +18,7 @@ public class GestorProductesTest {
 
         // ACT
         gestor.afegirProducte(p);
-        ArrayList<Producte> resultats = gestor.cercarPerNom("Pizza");
+        ArrayList<Producte> resultats = gestor.cercarProductesPerNom("Pizza");
 
         // ASSERT
         assert (resultats.size() == 1);
@@ -39,7 +33,7 @@ public class GestorProductesTest {
         gestor.afegirProducte(p);
 
         // ACT
-        ArrayList<Producte> resultats = gestor.cercarPerNom("lle");
+        ArrayList<Producte> resultats = gestor.cercarProductesPerNom("lle");
 
         // ASSERT
         assert (resultats.size() == 1);
