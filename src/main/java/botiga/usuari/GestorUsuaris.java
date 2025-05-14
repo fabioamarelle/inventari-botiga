@@ -78,8 +78,13 @@ public class GestorUsuaris {
         this.llistaUsuaris = llistaUsuaris;
     }
 
-    public void esborrarUsuari(String correuElectronic) {
-        llistaUsuaris.remove(obtenirUsuari(correuElectronic));
+    public boolean esborrarUsuari(String correu) {
+        Usuari usuari = obtenirUsuari(correu);
+        if (usuari != null) {
+            llistaUsuaris.remove(usuari);
+            return true;
+        }
+        return false;
     }
 
     public void esborrarUsuari() {
