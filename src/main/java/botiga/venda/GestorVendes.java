@@ -166,8 +166,9 @@ public class GestorVendes {
         return vendesAmbProducte;
     }
 
-    public void esborrarVenda(Venda venda){
+    public boolean esborrarVenda(Venda venda){
         llistaVendes.remove(venda);
+        return false;
     }
 
     public void esborrarVenda(){
