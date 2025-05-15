@@ -8,6 +8,8 @@ import main.java.botiga.venda.Transaccio;
 import main.java.botiga.venda.Venda;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +19,12 @@ import java.util.List;
 
 public class Interficie extends JFrame {
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private static final Color PRIMARY_COLOR = new Color(0, 102, 204);
+    private static final Color SECONDARY_COLOR = new Color(240, 240, 240);
+    private static final Font HEADER_FONT = new Font("Segoe UI", Font.BOLD, 24);
+    private static final Font BUTTON_FONT = new Font("Segoe UI", Font.PLAIN, 16);
+    private static final Font TEXT_FONT = new Font("Consolas", Font.PLAIN, 14);
+
     private JTextArea textArea;
     private CardLayout cardLayout;
     private JPanel contentPanel;
@@ -27,79 +35,182 @@ public class Interficie extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Panel principal
+        // Main panel with better styling
         JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        mainPanel.setBackground(SECONDARY_COLOR);
 
-        // Crear menú principal
+        // Create main menu
         JPanel mainMenuPanel = createMainMenuPanel();
 
-        // Panel de contenido con CardLayout
+        // Content panel with CardLayout
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
+        contentPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        contentPanel.setBackground(SECONDARY_COLOR);
         contentPanel.add(mainMenuPanel, "menu");
         contentPanel.add(createUsuarisPanel(), "usuaris");
         contentPanel.add(createProductesPanel(), "productes");
         contentPanel.add(createVendesPanel(), "vendes");
 
-        // Área de texto con scroll
-        textArea = new JTextArea();
+        // Text area with improved styling
+        textArea = new JTextArea(5, 20);
         textArea.setEditable(false);
-        textArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        textArea.setFont(TEXT_FONT);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setBackground(Color.WHITE);
+        textArea.setForeground(Color.BLACK);
 
-        // Añadir componentes al frame
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEmptyBorder(),
+                "Informació",
+                TitledBorder.LEFT,
+                TitledBorder.TOP,
+                BUTTON_FONT,
+                PRIMARY_COLOR));
+        scrollPane.setPreferredSize(new Dimension(getWidth(), 200));
+
+        // Add components to main panel
+        mainPanel.add(createHeaderPanel(), BorderLayout.NORTH);
         mainPanel.add(contentPanel, BorderLayout.CENTER);
-        mainPanel.add(scrollPane, BorderLayout.SOUTH);
+
+        JPanel textPanel = new JPanel(new BorderLayout());
+        textPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        textPanel.add(scrollPane, BorderLayout.CENTER);
+        mainPanel.add(textPanel, BorderLayout.SOUTH);
+
         add(mainPanel);
     }
 
+    private JPanel createHeaderPanel() {
+        JPanel headerPanel = new JPanel();
+        headerPanel.setBackground(PRIMARY_COLOR);
+        headerPanel.setBorder(new EmptyBorder(10, 15, 10, 15));
+        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
+
+        JLabel titleLabel = new JLabel("Gestor Botiga Online");
+        titleLabel.setFont(HEADER_FONT);
+        titleLabel.setForeground(Color.WHITE);
+
+        headerPanel.add(titleLabel);
+        headerPanel.add(Box.createHorizontalGlue());
+
+        return headerPanel;
+    }
+
     private JPanel createMainMenuPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBorder(new EmptyBorder(50, 100, 50, 100));
+        panel.setBackground(SECONDARY_COLOR);
 
-        JPanel panel = new JPanel(new GridLayout(3, 1, 20, 20));
-        panel.setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(15, 0, 15, 0);
+        gbc.weightx = 1;
+        gbc.weighty = 1;
 
-        JButton btnUsuaris = new JButton("Gestió Usuaris");
-        JButton btnProductes = new JButton("Gestió Productes");
-        JButton btnVendes = new JButton("Gestió Vendes");
-
-        btnUsuaris.setFont(new Font("Arial", Font.BOLD, 28));
-        btnProductes.setFont(new Font("Arial", Font.BOLD, 28));
-        btnVendes.setFont(new Font("Arial", Font.BOLD, 28));
+        JButton btnUsuaris = createMenuButton("Gestió Usuaris", "");
+        JButton btnProductes = createMenuButton("Gestió Productes", "");
+        JButton btnVendes = createMenuButton("Gestió Vendes", "");
 
         btnUsuaris.addActionListener(e -> cardLayout.show(contentPanel, "usuaris"));
         btnProductes.addActionListener(e -> cardLayout.show(contentPanel, "productes"));
         btnVendes.addActionListener(e -> cardLayout.show(contentPanel, "vendes"));
 
-        panel.add(btnUsuaris);
-        panel.add(btnProductes);
-        panel.add(btnVendes);
+        panel.add(btnUsuaris, gbc);
+        panel.add(btnProductes, gbc);
+        panel.add(btnVendes, gbc);
 
         return panel;
     }
 
+    private JButton createMenuButton(String text, String iconPath) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        button.setForeground(new Color(0, 102, 204));
+        button.setBackground(PRIMARY_COLOR);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createRaisedBevelBorder(),
+                BorderFactory.createEmptyBorder(15, 25, 15, 25)));
+
+            return button;
+    }
+
     private JPanel createUsuarisPanel() {
+        return createManagementPanel(
+                "Gestió d'Usuaris",
+                new String[]{"Afegir Usuari", "Esborrar Usuari", "Buscar Usuari", "Llistar Usuaris"},
+                new Runnable[]{this::afegirUsuari, this::esborrarUsuari, this::buscarUsuari, this::llistarUsuaris}
+        );
+    }
+
+    private JPanel createProductesPanel() {
+        return createManagementPanel(
+                "Gestió de Productes",
+                new String[]{"Afegir Producte", "Esborrar Producte", "Buscar Producte", "Llistar Productes"},
+                new Runnable[]{this::afegirProducte, this::esborrarProducte, this::buscarProducte, this::llistarProductes}
+        );
+    }
+
+    private JPanel createVendesPanel() {
+        return createManagementPanel(
+                "Gestió de Vendes",
+                new String[]{"Afegir Venda", "Esborrar Venda", "Buscar Venda", "Llistar Vendes"},
+                new Runnable[]{this::afegirVenda, this::esborrarVenda, this::buscarVenda, this::llistarVendes}
+        );
+    }
+
+    private JPanel createManagementPanel(String title, String[] buttonLabels, Runnable[] actions) {
         JPanel panel = new JPanel(new BorderLayout());
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        panel.setBackground(SECONDARY_COLOR);
 
-        JButton btnAfegir = new JButton("Afegir Usuari");
-        JButton btnEsborrar = new JButton("Esborrar Usuari");
-        JButton btnBuscar = new JButton("Buscar Usuari");
-        JButton btnLlistar = new JButton("Llistar Usuaris");
-        JButton btnTornar = new JButton("Tornar al Menú");
+        // Title panel
+        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        titlePanel.setBackground(SECONDARY_COLOR);
+        JLabel titleLabel = new JLabel(title);
+        titleLabel.setFont(HEADER_FONT);
+        titleLabel.setForeground(PRIMARY_COLOR);
+        titlePanel.add(titleLabel);
 
-        btnAfegir.addActionListener(e -> afegirUsuari());
-        btnEsborrar.addActionListener(e -> esborrarUsuari());
-        btnBuscar.addActionListener(e -> buscarUsuari());
-        btnLlistar.addActionListener(e -> llistarUsuaris());
+        // Button panel
+        JPanel buttonPanel = new JPanel(new GridLayout(1, buttonLabels.length, 10, 0));
+        buttonPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        buttonPanel.setBackground(SECONDARY_COLOR);
+
+        for (int i = 0; i < buttonLabels.length; i++) {
+            JButton button = new JButton(buttonLabels[i]);
+            button.setFont(BUTTON_FONT);
+            button.setBackground(Color.WHITE);
+            button.setFocusPainted(false);
+            button.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(PRIMARY_COLOR, 1),
+                    BorderFactory.createEmptyBorder(8, 15, 8, 15)));
+            int finalI = i;
+            button.addActionListener(e -> actions[finalI].run());
+            buttonPanel.add(button);
+        }
+
+        // Back button
+        JButton btnTornar = new JButton("Tornar al Menú Principal");
+        btnTornar.setFont(BUTTON_FONT);
+        btnTornar.setBackground(PRIMARY_COLOR);
+        btnTornar.setForeground(new Color(0, 102, 204));
+        btnTornar.setFocusPainted(false);
         btnTornar.addActionListener(e -> cardLayout.show(contentPanel, "menu"));
+        btnTornar.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
 
-        buttonPanel.add(btnAfegir);
-        buttonPanel.add(btnEsborrar);
-        buttonPanel.add(btnBuscar);
-        buttonPanel.add(btnLlistar);
-        buttonPanel.add(btnTornar);
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        bottomPanel.setBackground(SECONDARY_COLOR);
+        bottomPanel.add(btnTornar);
 
-        panel.add(buttonPanel, BorderLayout.NORTH);
+        panel.add(titlePanel, BorderLayout.NORTH);
+        panel.add(buttonPanel, BorderLayout.CENTER);
+        panel.add(bottomPanel, BorderLayout.SOUTH);
+
         return panel;
     }
 
@@ -167,31 +278,7 @@ public class Interficie extends JFrame {
                 u.getNom(), u.getCorreuElectronic(), u.getRol());
     }
 
-    private JPanel createProductesPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        JButton btnAfegir = new JButton("Afegir Producte");
-        JButton btnEsborrar = new JButton("Esborrar Producte");
-        JButton btnBuscar = new JButton("Buscar Producte");
-        JButton btnLlistar = new JButton("Llistar Productes");
-        JButton btnTornar = new JButton("Tornar al Menú");
-
-        btnAfegir.addActionListener(e -> afegirProducte());
-        btnEsborrar.addActionListener(e -> esborrarProducte());
-        btnBuscar.addActionListener(e -> buscarProducte());
-        btnLlistar.addActionListener(e -> llistarProductes());
-        btnTornar.addActionListener(e -> cardLayout.show(contentPanel, "menu"));
-
-        buttonPanel.add(btnAfegir);
-        buttonPanel.add(btnEsborrar);
-        buttonPanel.add(btnBuscar);
-        buttonPanel.add(btnLlistar);
-        buttonPanel.add(btnTornar);
-
-        panel.add(buttonPanel, BorderLayout.NORTH);
-        return panel;
-    }
 
     private void afegirProducte() {
         String nom = JOptionPane.showInputDialog("Introdueix el nom del producte:");
@@ -257,32 +344,6 @@ public class Interficie extends JFrame {
     private String formatProducte(Producte p) {
         return String.format("Nom: %s\nPreu: %.2f€\nStock: %d\n",
                 p.getNom(), p.getPreu(), p.getStock());
-    }
-
-    private JPanel createVendesPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-
-        JButton btnAfegir = new JButton("Afegir Venda");
-        JButton btnEsborrar = new JButton("Esborrar Venda");
-        JButton btnBuscar = new JButton("Buscar Venda");
-        JButton btnLlistar = new JButton("Llistar Vendes");
-        JButton btnTornar = new JButton("Tornar al Menú");
-
-        btnAfegir.addActionListener(e -> afegirVenda());
-        btnEsborrar.addActionListener(e -> esborrarVenda());
-        btnBuscar.addActionListener(e -> buscarVenda());
-        btnLlistar.addActionListener(e -> llistarVendes());
-        btnTornar.addActionListener(e -> cardLayout.show(contentPanel, "menu"));
-
-        buttonPanel.add(btnAfegir);
-        buttonPanel.add(btnEsborrar);
-        buttonPanel.add(btnBuscar);
-        buttonPanel.add(btnLlistar);
-        buttonPanel.add(btnTornar);
-
-        panel.add(buttonPanel, BorderLayout.NORTH);
-        return panel;
     }
 
     private void afegirVenda() {
@@ -437,6 +498,12 @@ public class Interficie extends JFrame {
     }
 
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            // Use default look and feel
+        }
+
         SwingUtilities.invokeLater(() -> {
             Interficie interfaz = new Interficie();
             interfaz.setVisible(true);
