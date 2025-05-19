@@ -168,14 +168,15 @@ public class GestorVendes {
 
     public boolean esborrarVenda(Venda venda){
         llistaVendes.remove(venda);
-        return false;
+        return true;
     }
 
-    public void esborrarVenda(){
+    public boolean esborrarVenda(){
         ArrayList<Venda> vendesAEsborrar = buscarVenda();
         for (Venda v : vendesAEsborrar){
             llistaVendes.remove(v);
         }
+        return true;
     }
 
     public ArrayList<Venda> getLlistaVendes() {
