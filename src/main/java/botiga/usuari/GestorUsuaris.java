@@ -65,7 +65,10 @@ public class GestorUsuaris {
         }
         return null;
     }
-
+    public ArrayList<Usuari> getTotsUsuaris() {
+            return new ArrayList<>(llistaUsuaris);
+        }
+    
     public ArrayList<Usuari> getLlistaUsuaris() {
         return llistaUsuaris;
     }
